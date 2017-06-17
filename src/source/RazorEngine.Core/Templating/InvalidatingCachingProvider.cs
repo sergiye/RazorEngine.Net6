@@ -13,9 +13,9 @@ namespace RazorEngine.Templating
     /// An memory leaking invalidating caching provider (See <see cref="ICachingProvider"/>).
     /// This implementation does a very simple in-memory caching and allows you to release templates
     /// by trading with memory.
-    /// WARNING: 
+    /// WARNING:
     /// Use this caching provider only on AppDomains you recycle regularly, or to
-    /// improve the debugging experience. 
+    /// improve the debugging experience.
     /// Never use this in production without any recycle strategy.
     /// </summary>
     public class InvalidatingCachingProvider : ICachingProvider
@@ -40,9 +40,11 @@ namespace RazorEngine.Templating
         /// <param name="registerForCleanup">callback for files which need to be cleaned up.</param>
         public InvalidatingCachingProvider(Action<string> registerForCleanup)
         {
-            _registerForCleanup = 
-                registerForCleanup ?? 
-                (item => RazorEngine.Compilation.CrossAppDomainCleanUp.RegisterCleanup(item, false));
+            _registerForCleanup = registerForCleanup;
+#if !NO_APPDOMAIN
+            if (_registerForCleanup == null)
+                _registerForCleanup = item => RazorEngine.Compilation.CrossAppDomainCleanUp.RegisterCleanup(item, false);
+#endif
             _loader = new TypeLoader(AppDomain.CurrentDomain, _assemblies);
         }
 
@@ -62,7 +64,7 @@ namespace RazorEngine.Templating
         /// </summary>
         public static Type GetModelTypeKey(Type modelType)
         {
-            if (modelType == null || 
+            if (modelType == null ||
                 typeof(System.Dynamic.IDynamicMetaObjectProvider).IsAssignableFrom(modelType))
             {
                 return typeof(System.Dynamic.DynamicObject);
@@ -105,7 +107,7 @@ namespace RazorEngine.Templating
         public void CacheTemplate(ICompiledTemplate template, ITemplateKey templateKey)
         {
             var modelTypeKey = GetModelTypeKey(template.ModelType);
-            _registerForCleanup(template.CompilationData.TmpFolder); 
+            _registerForCleanup(template.CompilationData.TmpFolder);
             CacheTemplateHelper(template, templateKey, modelTypeKey);
             var typeArgs = template.TemplateType.BaseType.GetGenericArguments();
             if (typeArgs.Length > 0)

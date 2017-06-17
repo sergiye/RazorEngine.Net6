@@ -42,6 +42,7 @@ namespace RazorEngine
             }
         }
 
+#if !NO_APPDOMAIN
         private static IRazorEngineService _isolatedService;
 
         /// <summary>
@@ -68,5 +69,6 @@ namespace RazorEngine
                 _isolatedService = value;
             }
         }
+#endif
     }
 }

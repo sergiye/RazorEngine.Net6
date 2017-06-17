@@ -61,7 +61,7 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
         }
 
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NO_APPDOMAIN
         internal class TempBuilder : IDisposable
         {
             private readonly string _name;
@@ -82,7 +82,6 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
                 if (_disposed)
                     throw new MethodAccessException("Can't Call Dispose Twice!!");
                 _disposed = true;
-
 
                 _tempSaveAssembly.Save(string.Format("{0}.dll", _name));
 
@@ -110,14 +109,14 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
 
 #endif
 
-        /// <summary>
-        /// Builds the type for the static proxy or returns from cache
-        /// </summary>
-        /// <param name="contextType">Type of the context.</param>
-        /// <param name="mainInterface">The main interface.</param>
-        /// <param name="otherInterfaces">The other interfaces.</param>
-        /// <returns></returns>
-        public static Type BuildType(Type contextType, Type mainInterface, params Type[] otherInterfaces)
+                /// <summary>
+                /// Builds the type for the static proxy or returns from cache
+                /// </summary>
+                /// <param name="contextType">Type of the context.</param>
+                /// <param name="mainInterface">The main interface.</param>
+                /// <param name="otherInterfaces">The other interfaces.</param>
+                /// <returns></returns>
+                public static Type BuildType(Type contextType, Type mainInterface, params Type[] otherInterfaces)
         {
             lock (TypeCacheLock)
             {
@@ -1677,18 +1676,21 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
         private static void GenerateAssembly(string name, AssemblyBuilderAccess access, ref AssemblyBuilder ab, ref ModuleBuilder mb)
         {
             var tName = new AssemblyName(name);
-
+#if NO_APPDOMAIN
+            ab = AssemblyBuilder.DefineDynamicAssembly(tName, access);
+#else
             ab =
                 AppDomain.CurrentDomain.DefineDynamicAssembly(
                     tName,
                     access);
+#endif
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NO_APPDOMAIN
             if (access == AssemblyBuilderAccess.RunAndSave || access == AssemblyBuilderAccess.Save)
                 mb = ab.DefineDynamicModule("MainModule", string.Format("{0}.dll", tName.Name));
             else
 #endif
-                mb = ab.DefineDynamicModule("MainModule");
+            mb = ab.DefineDynamicModule("MainModule");
         }
     }
 

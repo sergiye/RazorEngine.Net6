@@ -15,7 +15,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Test.RazorEngine.TestTypes.BaseTypes;
+#if !NO_APPDOMAIN
 using System.Runtime.Remoting;
+#endif
 using System.Collections.Concurrent;
 using System.Threading;
 
@@ -921,6 +923,7 @@ else {
             }
         }
 
+#if !NO_APPDOMAIN
         /// <summary>
         /// Tests ResolvePathTemplateManager.
         /// </summary>
@@ -973,6 +976,7 @@ else {
                 if (File.Exists(template2File)) { File.Delete(template2File); }
             }
         }
+#endif
 
         /// <summary>
         /// Model that has properties that are classes vice simple types

@@ -26,7 +26,12 @@
         /// <summary>
         /// A helper class to make sure the wrapped object does not leave its <see cref="AppDomain"/>.
         /// </summary>
-        internal class MarshalWrapper : CrossAppDomainObject
+        internal class MarshalWrapper :
+#if NO_APPDOMAIN
+            IDisposable
+#else
+            CrossAppDomainObject
+#endif
         {
             private object _component;
             private bool _allowMissing;
@@ -215,16 +220,28 @@
                     return RazorDynamicObject.Create(result, _disposables.Add, _allowMissing);
                 }
             }
+#if NO_APPDOMAIN
+            /// <summary>
+            /// Disposes the current instance.
+            /// </summary>
+            public void Dispose()
+            {
+                Dispose(true);
+            }
 
+            protected void Dispose(bool disposing)
+#else
             protected override void Dispose(bool disposing)
+#endif
             {
                 foreach (var disposable in _disposables)
                 {
                     disposable.Dispose();
                 }
                 _disposables.Clear();
-
+#if !NO_APPDOMAIN
                 base.Dispose(disposing);
+#endif
             }
         }
 

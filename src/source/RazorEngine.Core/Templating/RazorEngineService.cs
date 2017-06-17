@@ -19,7 +19,11 @@ namespace RazorEngine.Templating
     /// Defines a template service and the main API for running templates.
     /// Implements the <see cref="IRazorEngineService"/> interface.
     /// </summary>
-    public class RazorEngineService : CrossAppDomainObject, IRazorEngineService
+    public class RazorEngineService :
+        IRazorEngineService
+#if !NO_APPDOMAIN
+        , CrossAppDomainObject
+#endif
     {
         #region Fields
         private readonly ITemplateServiceConfiguration _config;
@@ -130,7 +134,11 @@ namespace RazorEngine.Templating
         /// Releases managed resources used by this instance.
         /// </summary>
         /// <param name="disposing">Are we explicitly disposing of this instance?</param>
+#if NO_APPDOMAIN
+        protected virtual void Dispose(bool disposing)
+#else
         protected override void Dispose(bool disposing)
+#endif
         {
             if (!disposed && disposing)
             {
@@ -138,8 +146,29 @@ namespace RazorEngine.Templating
                 _core_with_cache.Dispose();
                 disposed = true;
             }
+#if !NO_APPDOMAIN
             base.Dispose(disposing);
+#endif
         }
+
+#if NO_APPDOMAIN
+        /// <summary>
+        /// Disposes the current instance.
+        /// </summary>
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            Dispose(true);
+        }
+
+        /// <summary>
+        /// Cleans up the <see cref="CrossAppDomainObject"/> instance.
+        /// </summary>
+        ~RazorEngineService()
+        {
+            Dispose(false);
+        }
+#endif
 
         /// <summary>
         /// Gets an instance of a <see cref="IEncodedStringFactory"/> for a known encoding.
