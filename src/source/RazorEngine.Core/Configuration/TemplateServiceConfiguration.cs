@@ -38,7 +38,7 @@
                 new DefaultCompilerServiceFactory();
 #endif
             EncodedStringFactory = new HtmlEncodedStringFactory();
-            
+
 #if !RAZOR4
 #pragma warning disable 0618 // Backwards Compat.
             CodeInspectors = new List<ICodeInspector>();

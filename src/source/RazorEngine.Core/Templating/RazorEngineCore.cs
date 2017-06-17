@@ -84,9 +84,12 @@
             var context = CreateInstanceContext(template.TemplateType);
             ITemplate instance = _config.Activator.CreateInstance(context);
             instance.InternalTemplateService = new InternalTemplateService(this, template.Key);
+
+#if !NO_CODEDOM
 #pragma warning disable 0618 // Backwards Compat.
             instance.TemplateService = new TemplateService(_cached);
 #pragma warning restore 0618 // Backwards Compat.
+#endif
             instance.Razor = _cached;
             instance.SetData(model, viewbag);
             return instance;
@@ -140,7 +143,6 @@
         /// <returns>The string result of the template.</returns>
 #if RAZOR4
         public async Task RunTemplate(ICompiledTemplate template, System.IO.TextWriter writer, object model, DynamicViewBag viewBag)
-        
 #else
         public void RunTemplate(ICompiledTemplate template, System.IO.TextWriter writer, object model, DynamicViewBag viewBag)
 #endif

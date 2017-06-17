@@ -23,11 +23,13 @@
         [SecuritySafeCritical]
         public ICompilerService CreateCompilerService(Language language)
         {
+#if NO_CODEDOM
+            return new Roslyn.RoslynCompilerServiceFactory().CreateCompilerService(language);
+#else
             switch (language)
             {
                 case Language.CSharp:
                     return new CSharpDirectCompilerService();
-
                 case Language.VisualBasic:
 #if RAZOR4
                     throw new NotSupportedException("Razor4 doesn't support VB.net apparently.");
@@ -38,6 +40,7 @@
                 default:
                     throw new ArgumentException("Unsupported language: " + language);
             }
+#endif
         }
         #endregion
     }

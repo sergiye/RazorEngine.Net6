@@ -65,12 +65,13 @@ namespace RazorEngine.Templating
         /// Gets or sets the template service.
         /// </summary>
         public IInternalTemplateService InternalTemplateService { internal get; set; }
-
+#if !NO_CODEDOM
         /// <summary>
         /// Gets or sets the template service.
         /// </summary>
         [Obsolete("Only provided for backwards compatibility, use RazorEngine instead.")]
         public ITemplateService TemplateService { get; set; }
+#endif
 #if RAZOR4
 #else
         /// <summary>
