@@ -9,17 +9,19 @@
     using Text;
     using RazorEngine.Compilation.ReferenceResolver;
     using System.Security;
+#if !NO_CONFIGURATION
     using RazorEngine.Configuration.Xml;
-
+#endif
     /// <summary>
     /// Provides a default implementation of a template service configuration.
     /// </summary>
     public class TemplateServiceConfiguration : ITemplateServiceConfiguration
     {
+#if !NO_CONFIGURATION
 #pragma warning disable 0618 // Backwards Compat.
         private ITemplateResolver resolver;
 #pragma warning restore 0618 // Backwards Compat.
-
+#endif
         #region Constructor
 
         /// <summary>
@@ -54,11 +56,14 @@
                                  "System.Collections.Generic", 
                                  "System.Linq"
                              };
-            
+#if NO_CONFIGURATION
+            Language = Language.CSharp;
+#else
             var config = RazorEngineConfigurationSection.GetConfiguration();
             Language = (config == null)
                            ? Language.CSharp
                            : config.DefaultLanguage;
+#endif
         }
         #endregion
 
@@ -140,7 +145,7 @@
         /// Gets or sets the collection of namespaces.
         /// </summary>
         public ISet<string> Namespaces { get; set; }
-
+#if !NO_CONFIGURATION
         /// <summary>
         /// Gets or sets the template resolver.
         /// </summary>
@@ -157,7 +162,7 @@
                 }
             } 
         }
-
+#endif
         /// <summary>
         /// Gets or sets the template resolver.
         /// </summary>

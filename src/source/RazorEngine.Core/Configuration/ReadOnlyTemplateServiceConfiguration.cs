@@ -31,8 +31,10 @@ namespace RazorEngine.Configuration
         private readonly Language _language;
         private readonly ISet<string> _namespaces;
         private readonly IReferenceResolver _referenceResolver;
+#if !NO_CONFIGURATION
         [Obsolete("Use TemplateManager instead")]
         private readonly ITemplateResolver _resolver;
+#endif
         private readonly ITemplateManager _templateManager;
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace RazorEngine.Configuration
             {
                 throw new ArgumentOutOfRangeException("config", "the configured BaseTemplateType must implement ITemplate!");
             }
-            
+
             _cachingProvider = config.CachingProvider;
             if (_cachingProvider == null)
             {
@@ -106,9 +108,16 @@ namespace RazorEngine.Configuration
                 throw new ArgumentNullException("config", "the configured ReferenceResolver cannot be null!");
             }
 
+            _templateManager = config.TemplateManager;
+
+#if NO_CONFIGURATION
+            if (_templateManager == null)
+            {
+                throw new ArgumentNullException("config", "the configured TemplateManager cannot be null!");
+            }
+#else
 #pragma warning disable 0618 // Backwards Compat.
             _resolver = config.Resolver;
-            _templateManager = config.TemplateManager;
             if (_templateManager == null)
             {
                 if (_resolver != null)
@@ -121,7 +130,7 @@ namespace RazorEngine.Configuration
                 }
             }
 #pragma warning restore 0618 // Backwards Compat.
-
+#endif
         }
 
         /// <summary>
@@ -208,10 +217,10 @@ namespace RazorEngine.Configuration
         /// Loads all dynamic assemblies with Assembly.Load(byte[]).
         /// This prevents temp files from being locked (which makes it impossible for RazorEngine to delete them).
         /// At the same time this completely shuts down any sandboxing/security.
-        /// Use this only if you have a limited amount of static templates (no modifications on rumtime), 
+        /// Use this only if you have a limited amount of static templates (no modifications on rumtime),
         /// which you fully trust and when a seperate AppDomain is no solution for you!.
         /// This option will also hurt debugging.
-        /// 
+        ///
         /// OK, YOU HAVE BEEN WARNED.
         /// </summary>
         public bool DisableTempFileLocking
@@ -266,6 +275,7 @@ namespace RazorEngine.Configuration
             }
         }
 
+#if !NO_CONFIGURATION
         /// <summary>
         /// Gets the template resolver.
         /// </summary>
@@ -277,6 +287,7 @@ namespace RazorEngine.Configuration
                 return _resolver;
             }
         }
+#endif
 
         /// <summary>
         /// Gets the template resolver.

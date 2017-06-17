@@ -80,7 +80,7 @@
         /// <typeparam name="TEncodedStringFactory">The encoded string factory type.</typeparam>
         /// <returns>The current configuration builder.</returns>
         IConfigurationBuilder EncodeUsing<TEncodedStringFactory>() where TEncodedStringFactory : IEncodedStringFactory, new();
-
+#if !NO_CONFIGURATION
         /// <summary>
         /// Sets the resolve used to locate unknown templates.
         /// </summary>
@@ -88,14 +88,14 @@
         /// <returns>The current configuration builder.</returns>
         [Obsolete("Please use ManageUsing instead")]
         IConfigurationBuilder ResolveUsing<TResolver>() where TResolver : ITemplateResolver, new();
-
+#endif
         /// <summary>
         /// Sets the manager used to locate unknown templates.
         /// </summary>
         /// <typeparam name="TManager">The manager type.</typeparam>
         /// <returns>The current configuration builder.</returns>
         IConfigurationBuilder ManageUsing<TManager>() where TManager : ITemplateManager, new();
-
+#if !NO_CONFIGURATION
         /// <summary>
         /// Sets the resolver used to locate unknown templates.
         /// </summary>
@@ -103,7 +103,7 @@
         /// <returns>The current configuration builder.</returns>
         [Obsolete("Please use ManageUsing instead")]
         IConfigurationBuilder ResolveUsing(ITemplateResolver resolver);
-        
+#endif
         /// <summary>
         /// Sets the manager used to locate unknown templates.
         /// </summary>

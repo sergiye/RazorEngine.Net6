@@ -173,7 +173,7 @@
 
             return this;
         }
-
+#if !NO_CONFIGURATION
         /// <summary>
         /// Sets the resolve used to locate unknown templates.
         /// </summary>
@@ -185,7 +185,7 @@
             _config.Resolver = new TResolver();
             return this;
         }
-
+#endif
         /// <summary>
         /// Sets the resolve used to locate unknown templates.
         /// </summary>
@@ -196,7 +196,7 @@
             _config.TemplateManager = new TResolver();
             return this;
         }
-
+#if !NO_CONFIGURATION
         /// <summary>
         /// Sets the resolver used to locate unknown templates.
         /// </summary>
@@ -210,7 +210,7 @@
             _config.Resolver = resolver;
             return this;
         }
-
+#endif
         /// <summary>
         /// Sets the resolver used to locate unknown templates.
         /// </summary>

@@ -54,11 +54,14 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public static ICompilerService GetDefaultCompilerService()
         {
+#if NO_CONFIGURATION
+            return GetCompilerService(Language.CSharp);
+#else
             var config = RazorEngineConfigurationSection.GetConfiguration();
             if (config == null)
                 return GetCompilerService(Language.CSharp);
-
             return GetCompilerService(config.DefaultLanguage);
+#endif
         }
         #endregion
     }

@@ -139,7 +139,7 @@
         {
             get { return _innerConfig.Namespaces; }
         }
-
+#if !NO_CONFIGURATION
         /// <summary>
         /// Gets the resolver.
         /// </summary>
@@ -148,7 +148,7 @@
         {
             get { return _innerConfig.Resolver; }
         }
-
+#endif
         /// <summary>
         /// Gets the template manager.
         /// </summary>

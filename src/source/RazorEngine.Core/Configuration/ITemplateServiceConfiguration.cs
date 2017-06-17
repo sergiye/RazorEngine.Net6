@@ -84,18 +84,18 @@
         /// Gets the namespaces.
         /// </summary>
         ISet<string> Namespaces { get; }
-
+#if !NO_CONFIGURATION
         /// <summary>
         /// Gets the template resolver.
         /// </summary>
         [Obsolete("Please use the TemplateManager property instead")]
         ITemplateResolver Resolver { get; }
-        
+#endif
         /// <summary>
         /// Gets the template resolver.
         /// </summary>
         ITemplateManager TemplateManager { get; }
-        #endregion
+#endregion
 
     }
 }
