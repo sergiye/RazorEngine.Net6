@@ -585,7 +585,8 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
             generator.Emit(OpCodes.Call, tTypeMeth);
         }
 
-
+        // TODO: Consider removing this method because it does not appear to be used anywhere.
+#if !NETCORE
         /// <summary>
         /// Emits the typeof(Type)
         /// </summary>
@@ -598,5 +599,6 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
             var tTypeMeth = typeof(Type).GetMethod("GetTypeFromHandle", new[] { typeof(RuntimeTypeHandle) });
             generator.Emit(OpCodes.Call, tTypeMeth);
         }
+#endif
     }
 }
