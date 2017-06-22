@@ -240,7 +240,12 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
                 MakePropertyDescribedProperty(builder, tB, contextType, tInterface.Key, tInterface.Value);
 
             }
+
+#if NET40
             var tType = tB.CreateType();
+#else
+            var tType = tB.CreateTypeInfo().AsType();
+#endif
             return tType;
         }
 
@@ -358,7 +363,12 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
                     MakeEvent(builder, tInfo, tB, contextType, defaultImp: tPropertyNameHash.Add(tInfo.Name));
                 }
             }
+
+#if NET40
             var tType = tB.CreateType();
+#else
+            var tType = tB.CreateTypeInfo().AsType();
+#endif
             return tType;
         }
 
@@ -473,10 +483,11 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
             var tInvokeMethod = tEmitInfo.CallSiteInvokeName;
             var tInvokeFuncType = tCStp.DefineCallsiteFieldForMethod(tInvokeMethod, tReturnType != typeof(void) ? typeof(object) : typeof(void), tParamTypes, info);
 
-
-
-
+#if NET40
             var tCallSite = tCStp.CreateType();
+#else
+            var tCallSite = tCStp.CreateTypeInfo().AsType();
+#endif
 
             var tPublicPrivate = MethodAttributes.Public;
             var tPrefixName = tEmitInfo.Name;
@@ -759,7 +770,13 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
 
             tEmitInfo.CallSiteInvokeSetFuncType = tCStp.DefineCallsiteField(tEmitInfo.CallSiteInvokeSetName, typeof(object), typeof(object));
 
-            tEmitInfo.CallSiteType = tCStp.CreateType();
+#if NET40
+            var tCallSite = tCStp.CreateType();
+#else
+            var tCallSite = tCStp.CreateTypeInfo().AsType();
+#endif
+
+            tEmitInfo.CallSiteType = tCallSite;
 
             var tMp = typeBuilder.DefineEvent(info.Name, EventAttributes.None, tEmitInfo.ResolveReturnType);
 
@@ -1095,9 +1112,12 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
                 emitInfo.CallSiteInvokeSetFuncType = tCStp.DefineCallsiteField(tInvokeSet, typeof(object), emitInfo.ResolvedParamTypes);
             }
 
-            emitInfo.CallSiteType = tCStp.CreateType();
-
-
+#if NET40
+            var tCallSite = tCStp.CreateType();
+#else
+            var tCallSite = tCStp.CreateTypeInfo().AsType();
+#endif
+            emitInfo.CallSiteType = tCallSite;
 
             var tPublicPrivate = MethodAttributes.Public;
             var tPrefixedGet = emitInfo.GetName;
@@ -1641,10 +1661,11 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
 
             tMethod.SetImplementationFlags(MethodImplAttributes.CodeTypeMask);
 
-
-
+#if NET40
             return tBuilder.CreateType();
-
+#else
+            return tBuilder.CreateTypeInfo().AsType();
+#endif
         }
 
         private static ParameterAttributes AttributesForParam(ParameterInfo param)
