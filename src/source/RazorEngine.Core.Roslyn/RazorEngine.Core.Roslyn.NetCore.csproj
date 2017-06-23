@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <DefineConstants>$(DefineConstants);RAZOR4</DefineConstants>
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);NET45;RAZOR4</DefineConstants>
     <AssetTargetFallback>portable-net45+win8+wp8+wpa81</AssetTargetFallback>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>
@@ -9,6 +9,9 @@
     <!-- Do not generate AssemblyInfo because we are doing that with the
       GenerateAssemblyInfoFile target in dir.targets -->
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>RazorEngine.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>

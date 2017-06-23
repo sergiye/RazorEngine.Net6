@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
+    <RuntimeIdentifiers>win7-x64;win7-x86</RuntimeIdentifiers>
+    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NO_DEFAULT_COMPILERSERVICE;NETCORE</DefineConstants>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- Do not generate AssemblyInfo because we are doing that with the
+      GenerateAssemblyInfoFile target in dir.targets -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>RazorEngine.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170618-03" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="15.3.0-preview-20170618-03 " />
+    <PackageReference Include="Moq" Version="4.7.63" />
+    <PackageReference Include="NUnit" Version="3.7.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-alpha1" />
+    <PackageReference Include="System.Diagnostics.Contracts" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.Globalization" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.IO.FileSystem.Primitives" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.IO.FileSystem.Watcher" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.Linq.Expressions" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.Net.Primitives" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.Runtime" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.Runtime.Handles" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="System.Security.Permissions" Version="4.4.0-beta-24913-02" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\RazorEngine.Core.Roslyn\RazorEngine.Core.Roslyn.NetCore.csproj" />
+    <ProjectReference Include="..\..\source\RazorEngine.Core\RazorEngine.Core.NetCore.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('NO_APPDOMAIN'))">
+    <Compile Remove="IsolatedRazorEngineServiceTestFixture.cs" />
+    <Compile Remove="IsolatedTemplateServiceTestFixture.cs" />
+    <Compile Remove="RazorEngineCleanupTests.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('NO_CODEDOM'))">
+    <Compile Remove="TemplateServiceTestFixture.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('NO_CONFIGURATION'))">
+    <Compile Remove="ConfigurationTestFixture.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ActivatorTestFixture.cs" />
+    <Compile Remove="TestTypes\Activation\UnityTemplateActivator.cs" />
+  </ItemGroup>
+</Project>
