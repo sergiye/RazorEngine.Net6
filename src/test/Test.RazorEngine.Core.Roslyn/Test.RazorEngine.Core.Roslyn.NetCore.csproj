@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
+    <TargetFrameworks>net462;netcoreapp2.0</TargetFrameworks>
     <RuntimeIdentifiers>win7-x64;win7-x86</RuntimeIdentifiers>
-    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NO_DEFAULT_COMPILERSERVICE;NETCORE</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
     <AssetTargetFallback>portable-net45+win8+wp8+wpa81</AssetTargetFallback>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>

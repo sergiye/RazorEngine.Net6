@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
-    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NO_DEFAULT_COMPILERSERVICE;NETCORE</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Do not generate AssemblyInfo because we are doing that with the
@@ -47,7 +47,6 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains('NO_CODEDOM'))">
-    <Compile Remove="Compilation\DefaultCompilerServiceFactory.cs" />
     <Compile Remove="Compilation\CSharp\CSharpDirectCompilerService.cs" />
     <Compile Remove="Compilation\DirectCompilerServiceBase.cs" />
 
