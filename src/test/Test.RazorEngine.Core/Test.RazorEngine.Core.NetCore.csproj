@@ -13,6 +13,7 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>RazorEngine.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+    <RootNamespace>Test.RazorEngine</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.0" />
@@ -54,5 +55,17 @@
   <ItemGroup>
     <Compile Remove="ActivatorTestFixture.cs" />
     <Compile Remove="TestTypes\Activation\UnityTemplateActivator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templating\Templates\Layout.cshtml" />
+    <EmbeddedResource Include="Templating\Templates\NoModel.cshtml" />
+    <EmbeddedResource Include="Templating\Templates\Partial.cshtml" />
+    <EmbeddedResource Include="Templating\Templates\WithLayout.cshtml" />
+    <EmbeddedResource Include="Templating\Templates\WithModel.cshtml" />
+    <EmbeddedResource Include="Templating\Templates\WithPartial.cshtml" />
+    <None Include="test\TestHelper.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

@@ -12,6 +12,8 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>RazorEngine.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+    <RootNamespace>RazorEngine</RootNamespace>
+    <AssemblyName>RazorEngine.NetCore</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo-Razor4.cs">
