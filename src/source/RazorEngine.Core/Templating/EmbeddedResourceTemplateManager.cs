@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace RazorEngine.Templating
 {
@@ -32,14 +33,57 @@ namespace RazorEngine.Templating
         /// <returns></returns>
         public ITemplateSource Resolve(ITemplateKey key)
         {
-            using (var stream = this.RootType.Assembly.GetManifestResourceStream(this.RootType, key.Name + ".cshtml"))
+            Stream stream = null;
+            var name = key.Name + ".cshtml";
+
+            try
             {
-                if(stream == null)
-                    throw new TemplateLoadingException(string.Format("Couldn't load resource '{0}.{1}.cshtml' from assembly {2}", this.RootType.Namespace, key.Name, this.RootType.Assembly.FullName));
+                stream = this.RootType.Assembly.GetManifestResourceStream(this.RootType, name);
+
+                // Assemblies built using .NET Core CLI have their embedded resources named by:
+                // {assembly name}.{folder structure (separated by periods)}.{name}
+                //
+                // ie. Test.RazorEngine.Core.Templating.Templates.Layout.cshtml where:
+                // assembly name:    Test.RazorEngine.Core
+                // folder structure: Templating.Templates
+                // name:             Layout.cshtml
+                //
+                // If the namespace of the RootType does not use the generated default namespace
+                // then it would be unable to resolve the resource manifest scoped by that RootType.
+                if (stream == null)
+                {
+                    var matching = this.RootType.Assembly.GetManifestResourceNames()
+                        .Where(x => x.EndsWith(name, StringComparison.Ordinal))
+                        .ToArray();
+
+                    if (matching.Length == 0)
+                    {
+                        throw new TemplateLoadingException(string.Format("Couldn't load resource '{0}.{1}.cshtml' from assembly {2}", this.RootType.Namespace, key.Name, this.RootType.Assembly.FullName));
+                    }
+                    else if (matching.Length > 1)
+                    {
+                        throw new TemplateLoadingException(string.Format(
+                            "Could not resolve template scoped to root type {0}. Found multiple templates ending with {0} in assembly {2}!"
+                            + "  Please specify a fully-qualified template name. Matching templates:  {3}",
+                            this.RootType.Namespace, name, this.RootType.Assembly.FullName, string.Join("; ", matching))
+                        );
+                    }
+                    else
+                    {
+                        stream = RootType.Assembly.GetManifestResourceStream(matching[0]);
+                    }
+                }
 
                 using (var reader = new StreamReader(stream))
                 {
                     return new LoadedTemplateSource(reader.ReadToEnd());
+                }
+            }
+            finally
+            {
+                if (stream != null)
+                {
+                    stream.Dispose();
                 }
             }
         }
