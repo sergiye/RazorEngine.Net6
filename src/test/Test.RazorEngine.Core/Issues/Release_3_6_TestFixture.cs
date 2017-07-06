@@ -23,6 +23,7 @@
             
         }
 
+#if !NO_REMOTING
         /// <summary>
         /// See https://github.com/Antaris/RazorEngine/issues/267
         /// </summary>
@@ -68,6 +69,7 @@
                 System.Runtime.Remoting.Messaging.CallContext.FreeNamedDataSlot("Unserializable");
             }
         }
+#endif
 
         /// <summary>
         /// Anonymous classes do not work when wrapped in dynamic (via a method call).

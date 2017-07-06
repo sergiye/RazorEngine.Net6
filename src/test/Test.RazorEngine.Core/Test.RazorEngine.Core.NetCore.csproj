@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net462;netcoreapp2.0</TargetFrameworks>
     <RuntimeIdentifiers>win7-x64;win7-x86</RuntimeIdentifiers>
-    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_REMOTING;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>
   <PropertyGroup>
