@@ -20,10 +20,10 @@ namespace RazorEngine.Templating
     /// Implements the <see cref="IRazorEngineService"/> interface.
     /// </summary>
     public class RazorEngineService :
-        IRazorEngineService
 #if !NO_APPDOMAIN
-        , CrossAppDomainObject
+        CrossAppDomainObject,
 #endif
+        IRazorEngineService
     {
         #region Fields
         private readonly ITemplateServiceConfiguration _config;
@@ -242,7 +242,7 @@ namespace RazorEngine.Templating
 
         /// <summary>
         /// Runs the given cached template.
-        /// When the cache does not contain the template 
+        /// When the cache does not contain the template
         /// it will be compiled and cached beforehand.
         /// </summary>
         /// <param name="key"></param>
