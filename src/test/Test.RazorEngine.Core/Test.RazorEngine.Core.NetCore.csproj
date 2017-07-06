@@ -2,11 +2,15 @@
   <PropertyGroup>
     <TargetFrameworks>net462;netcoreapp2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);NET45;RAZOR4;</DefineConstants>
+    <!-- TODO: Move this between Lines 12-14.
+    These should be under a property group just for .NET Core App 2.0.
+    This is here to ensure that the behaviour in .NET 4.6.2 and .NET Core App 2.0 are the same.
+    -->
+    <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_REMOTING;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <OutputType>Exe</OutputType>
-    <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_REMOTING;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Do not generate AssemblyInfo because we are doing that with the
