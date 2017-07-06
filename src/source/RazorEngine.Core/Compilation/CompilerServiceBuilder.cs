@@ -11,10 +11,10 @@
     {
         #region Fields
         private static ICompilerServiceFactory _factory =
-#if RAZOR4
-            new Roslyn.RoslynCompilerServiceFactory();
-#else
+#if NET40
             new DefaultCompilerServiceFactory();
+#else
+            new Roslyn.RoslynCompilerServiceFactory();
 #endif
         private static readonly object sync = new object();
         #endregion

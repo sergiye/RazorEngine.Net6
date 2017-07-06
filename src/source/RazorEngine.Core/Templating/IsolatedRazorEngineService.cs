@@ -95,7 +95,7 @@
                 // the Isolated service, it requires everything to be [SecurityCritical].
                 return new TemplateServiceConfiguration()
                 {
-                    CompilerServiceFactory = new DefaultCompilerServiceFactory()
+                    CompilerServiceFactory = new Roslyn.RoslynCompilerServiceFactory()
                 };
             }
         }

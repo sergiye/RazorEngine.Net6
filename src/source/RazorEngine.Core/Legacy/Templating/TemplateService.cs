@@ -51,7 +51,7 @@ namespace RazorEngine.Templating
         /// Initialises a new instance of <see cref="TemplateService"/>.
         /// </summary>
         public TemplateService()
-            : this(new TemplateServiceConfiguration() { CompilerServiceFactory = new DefaultCompilerServiceFactory() }) { }
+            : this(new TemplateServiceConfiguration() { CompilerServiceFactory = new Roslyn.RoslynCompilerServiceFactory() }) { }
 
         /// <summary>
         /// Initialises a new instance of <see cref="TemplateService"/>
@@ -59,7 +59,7 @@ namespace RazorEngine.Templating
         /// <param name="language">The code language.</param>
         /// <param name="encoding">the encoding.</param>
         internal TemplateService(Language language, Encoding encoding)
-            : this(new TemplateServiceConfiguration() { Language = language, EncodedStringFactory = GetEncodedStringFactory(encoding), CompilerServiceFactory = new DefaultCompilerServiceFactory() }) { }
+            : this(new TemplateServiceConfiguration() { Language = language, EncodedStringFactory = GetEncodedStringFactory(encoding), CompilerServiceFactory = new Roslyn.RoslynCompilerServiceFactory() }) { }
         #endregion
 
         #region Properties

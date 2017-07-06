@@ -35,7 +35,7 @@ namespace RazorEngine.Roslyn
 //#if RAZOR4
                     throw new NotSupportedException("Razor4 doesn't support VB.net apparently.");
 //#else
-//                    return new VBRoslynCompilerService();
+                //return new VBRoslynCompilerService();
 //#endif
 
                 default:

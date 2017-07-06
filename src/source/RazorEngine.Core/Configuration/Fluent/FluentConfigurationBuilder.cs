@@ -271,10 +271,10 @@
         public IConfigurationBuilder UseDefaultCompilerServiceFactory()
         {
             _config.CompilerServiceFactory =
-#if RAZOR4
-                new Roslyn.RoslynCompilerServiceFactory();
-#else
+#if NET40
                 new DefaultCompilerServiceFactory();
+#else
+                new Roslyn.RoslynCompilerServiceFactory();
 #endif
             return this;
         }
