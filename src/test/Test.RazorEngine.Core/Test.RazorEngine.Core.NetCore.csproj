@@ -2,8 +2,11 @@
   <PropertyGroup>
     <TargetFrameworks>net462;netcoreapp2.0</TargetFrameworks>
     <RuntimeIdentifiers>win7-x64;win7-x86</RuntimeIdentifiers>
-    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_REMOTING;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;RAZOR4;</DefineConstants>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
+    <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_REMOTING;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Do not generate AssemblyInfo because we are doing that with the

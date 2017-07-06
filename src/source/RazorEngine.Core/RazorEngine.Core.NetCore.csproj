@@ -2,7 +2,10 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
-    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
+    <DefineConstants>$(DefineConstants);NET45;RAZOR4</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Do not generate AssemblyInfo because we are doing that with the
@@ -33,6 +36,10 @@
     <PackageReference Include="System.Reflection.Emit" Version="4.4.0-beta-24913-02" />
     <PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.4.0-beta-24913-02" />
     <PackageReference Include="System.Security.Permissions" Version="4.4.0-beta-24913-02" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+    <Reference Include="System.Configuration" />
   </ItemGroup>
 
   <!-- Exclude components that use System.Configuration -->
