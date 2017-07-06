@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26621.2
+VisualStudioVersion = 15.0.26703.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorEngine.Core.NetCore", "source\RazorEngine.Core\RazorEngine.Core.NetCore.csproj", "{811157A5-C29E-418C-AE17-E9490F4128C8}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.RazorEngine.Core.Roslyn.NetCore", "test\Test.RazorEngine.Core.Roslyn\Test.RazorEngine.Core.Roslyn.NetCore.csproj", "{866B6B22-7CFD-4FFB-B0F5-E29E5B58D663}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.RazorEngine.Core.NetCore", "test\Test.RazorEngine.Core\Test.RazorEngine.Core.NetCore.csproj", "{A9702213-B89A-45A7-AF92-58E08DA1E197}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.RazorEngine.NUnitRunner", "test\Test.RazorEngine.NUnitRunner\Test.RazorEngine.NUnitRunner.csproj", "{57A0CF9C-92C5-403A-A847-88981519AE2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A9702213-B89A-45A7-AF92-58E08DA1E197}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9702213-B89A-45A7-AF92-58E08DA1E197}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9702213-B89A-45A7-AF92-58E08DA1E197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57A0CF9C-92C5-403A-A847-88981519AE2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A0CF9C-92C5-403A-A847-88981519AE2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A0CF9C-92C5-403A-A847-88981519AE2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A0CF9C-92C5-403A-A847-88981519AE2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

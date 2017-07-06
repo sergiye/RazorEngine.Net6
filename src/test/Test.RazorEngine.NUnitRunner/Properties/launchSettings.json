@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Test.RazorEngine.NUnitRunner": {
+      "commandName": "Project",
+      "commandLineArgs": "--where \"name == Issue67_CollectionOfAnonymous\""
+    }
+  }
+}
