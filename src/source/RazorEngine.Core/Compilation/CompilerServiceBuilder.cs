@@ -1,7 +1,6 @@
 ﻿namespace RazorEngine.Compilation
 {
     using System.Diagnostics.Contracts;
-    using RazorEngine.Roslyn;
     using Configuration;
 
     /// <summary>
