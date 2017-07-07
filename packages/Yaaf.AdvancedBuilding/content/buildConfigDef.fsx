@@ -77,7 +77,10 @@ type BuildParams =
       BuildMode = "Release"
       PlatformName = "Any CPU"
       UseProjectOutDir = true
-      FindSolutionFiles = fun _ -> !! "**/*.sln" :> _
+      FindSolutionFiles = fun _ ->
+        !! "**/*.sln"
+        -- "**/*.NetCore.sln"
+        :> _
       FindProjectFiles = fun _ -> Seq.empty
       FindTestFiles = fun _ -> Seq.empty }
 
