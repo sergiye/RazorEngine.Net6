@@ -7,7 +7,6 @@
     This is here to ensure that the behaviour in .NET 4.6.2 and .NET Core App 2.0 are the same.
     -->
     <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_REMOTING;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
-    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <OutputType>Exe</OutputType>
@@ -24,23 +23,11 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170618-03" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <PackageReference Include="Moq" Version="4.7.63" />
     <PackageReference Include="NUnit" Version="3.7.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-alpha1" />
-    <PackageReference Include="System.Diagnostics.Contracts" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.Globalization" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.IO.FileSystem.Primitives" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.IO.FileSystem.Watcher" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.Linq.Expressions" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.Net.Primitives" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.Runtime" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.Runtime.Handles" Version="4.4.0-beta-24913-02" />
-    <PackageReference Include="System.Security.Permissions" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\source\RazorEngine.Core.Roslyn\RazorEngine.Core.Roslyn.NetCore.csproj" />
