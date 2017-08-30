@@ -2,6 +2,8 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
+    <AssetTargetFallback>portable-net45+win8+wp8+wpa81</AssetTargetFallback>
     <DefineConstants>$(DefineConstants);NET45;RAZOR4</DefineConstants>
     <!-- TODO: Move this between Lines 13-14.
     These should be under a property group just for .NET Core App 2.0.
@@ -40,6 +42,9 @@
     <PackageReference Include="System.Reflection.Emit" Version="4.4.0-beta-24913-02" />
     <PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.4.0-beta-24913-02" />
     <PackageReference Include="System.Security.Permissions" Version="4.4.0-beta-24913-02" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="1.3.2" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.0" />
+    <PackageReference Include="System.Security.Permissions" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
