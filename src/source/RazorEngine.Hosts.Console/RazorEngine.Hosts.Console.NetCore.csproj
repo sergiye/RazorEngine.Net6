@@ -6,6 +6,5 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\RazorEngine.Core\RazorEngine.Core.NetCore.csproj" />
-    <ProjectReference Include="..\RazorEngine.Core.Roslyn\RazorEngine.Core.Roslyn.NetCore.csproj" />
   </ItemGroup>
 </Project>

@@ -24,7 +24,6 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.8.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\source\RazorEngine.Core.Roslyn\RazorEngine.Core.Roslyn.NetCore.csproj" />
     <ProjectReference Include="..\..\source\RazorEngine.Core\RazorEngine.Core.NetCore.csproj" />
     <ProjectReference Include="..\Test.RazorEngine.Core\Test.RazorEngine.Core.NetCore.csproj" />
   </ItemGroup>
