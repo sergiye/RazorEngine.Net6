@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net462;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
     <DefineConstants>$(DefineConstants);NET45;RAZOR4;</DefineConstants>
     <!-- TODO: Move this between Lines 12-14.
     These should be under a property group just for .NET Core App 2.0.
