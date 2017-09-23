@@ -1,5 +1,4 @@
 ﻿#if RAZOR4
-using Microsoft.AspNetCore.Razor.Parser;
 #else
 using System.Web.Razor.Parser;
 #endif
@@ -39,10 +38,8 @@ namespace RazorEngine.Roslyn.CSharp
         /// <param name="strictMode"></param>
         /// <param name="markupParserFactory"></param>
         [SecurityCritical]
-        public CSharpRoslynCompilerService(bool strictMode = true, Func<ParserBase> markupParserFactory = null)
-            : base(
-                new RazorEngine.Compilation.CSharp.CSharpRazorCodeLanguage(strictMode),
-                markupParserFactory) {
+        public CSharpRoslynCompilerService(bool strictMode = true)
+            : base() {
 #if !RAZOR4
             _codeDomProvider = new Microsoft.CSharp.CSharpCodeProvider(); 
 #endif

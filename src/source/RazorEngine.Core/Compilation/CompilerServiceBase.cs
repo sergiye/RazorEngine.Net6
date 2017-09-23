@@ -8,9 +8,7 @@
     using System.Linq;
 #if RAZOR4
     using Microsoft.AspNetCore.Razor;
-    using Microsoft.AspNetCore.Razor.CodeGenerators;
-    using Microsoft.AspNetCore.Razor.Parser;
-    using Microsoft.AspNetCore.Razor.Parser.Internal;
+    using Microsoft.AspNetCore.Razor.Language;
 #else
     using System.Web.Razor;
     using System.Web.Razor.Generator;
@@ -37,34 +35,6 @@
         /// </summary>
         protected internal const string ClassNamePrefix = "RazorEngine_";
 
-        /// <summary>
-        /// This class only exists because we cannot use Func&lt;ParserBase&gt; in non security-critical class.
-        /// </summary>
-        [SecurityCritical]
-        public class ParserBaseCreator
-        {
-            /// <summary>
-            /// The parser creator.
-            /// </summary>
-            private Func<ParserBase> creator;
-            /// <summary>
-            /// Create a new ParserBaseCreator instance.
-            /// </summary>
-            /// <param name="creator">The parser creator.</param>
-            public ParserBaseCreator(Func<ParserBase> creator)
-            {
-                this.creator = creator ?? (() => new HtmlMarkupParser());
-            }
-            /// <summary>
-            /// Execute the given delegate.
-            /// </summary>
-            /// <returns></returns>
-            public ParserBase Create()
-            {
-                return this.creator();
-            }
-        }
-
         #region Constructor
         /// <summary>
         /// Initialises a new instance of <see cref="CompilerServiceBase"/>
@@ -72,12 +42,8 @@
         /// <param name="codeLanguage">The code language.</param>
         /// <param name="markupParserFactory">The markup parser factory.</param>
         [SecurityCritical]
-        protected CompilerServiceBase(RazorCodeLanguage codeLanguage, ParserBaseCreator markupParserFactory)
+        protected CompilerServiceBase()
         {
-            Contract.Requires(codeLanguage != null);
-
-            CodeLanguage = codeLanguage;
-            MarkupParserFactory = markupParserFactory ?? new ParserBaseCreator(null);
             ReferenceResolver = new UseCurrentAssembliesReferenceResolver();
         }
         #endregion
@@ -97,11 +63,6 @@
         public IReferenceResolver ReferenceResolver { get; set; }
 
         /// <summary>
-        /// Gets the code language.
-        /// </summary>
-        public RazorCodeLanguage CodeLanguage { [SecurityCritical] get; [SecurityCritical] private set; }
-
-        /// <summary>
         /// Gets or sets whether the compiler service is operating in debug mode.
         /// </summary>
         public bool Debug { get; set; }
@@ -111,11 +72,6 @@
         /// to prevent files from being locked.
         /// </summary>
         public bool DisableTempFileLocking { get; set; }
-
-        /// <summary>
-        /// Gets the markup parser.
-        /// </summary>
-        public ParserBaseCreator MarkupParserFactory { [SecurityCritical] get; [SecurityCritical] private set; }
 
         /// <summary>
         /// Extension of a source file without dot ("cs" for C# files or "vb" for VB.NET files).
@@ -199,6 +155,7 @@
         /// <param name="className">The class name.</param>
         /// <returns>An instance of <see cref="RazorEngineHost"/>.</returns>
 
+#if !RAZOR4
         [SecurityCritical]
         private RazorEngineHost CreateHost(Type templateType, Type modelType, string className)
         {
@@ -227,6 +184,7 @@
 
             return host;
         }
+#endif
 
 
         /// <summary>
@@ -238,7 +196,8 @@
         /// <param name="templateType">The template type.</param>
         /// <param name="modelType">The model type.</param>
         /// <returns></returns>
-        [Pure][SecurityCritical]
+        [Pure]
+        [SecurityCritical]
         public string GetCodeCompileUnit(string className, ITemplateSource template, ISet<string> namespaceImports, Type templateType, Type modelType)
         {
             var typeContext =
@@ -268,21 +227,18 @@
         /// <param name="context"></param>
         /// <returns></returns>
         [SecurityCritical]
-#if RAZOR4
-        public virtual string InspectSource(GeneratorResults results, TypeContext context)
+        public virtual string InspectSource(RazorPageGeneratorResult results, TypeContext context)
         {
             return results.GeneratedCode;
         }
-#else
-        public abstract string InspectSource(GeneratorResults results, TypeContext context);
-#endif
 
         /// <summary>
         /// Gets the code compile unit used to compile a type.
         /// </summary>
         /// <param name="context"></param>
         /// <returns>A <see cref="CodeCompileUnit"/> used to compile a type.</returns>
-        [Pure][SecurityCritical]
+        [Pure]
+        [SecurityCritical]
         public string GetCodeCompileUnit(TypeContext context)
         {
             string className = context.ClassName;
@@ -298,17 +254,9 @@
                 throw new ArgumentException("Template is required.");
 
             namespaceImports = namespaceImports ?? new HashSet<string>();
-            templateType = templateType ?? ((modelType == null) ? typeof(TemplateBase) : typeof(TemplateBase<>));
-
-            // Create the RazorEngineHost
-            var host = CreateHost(templateType, modelType, className);
-
-            // Add any required namespace imports
-            foreach (string ns in GetNamespaces(templateType, namespaceImports))
-                host.NamespaceImports.Add(ns);
 
             // Gets the generator result.
-            return GetGeneratorResult(host, context);
+            return GetGeneratorResult(GetNamespaces(templateType, namespaceImports), context);
         }
 
         /// <summary>
@@ -318,13 +266,96 @@
         /// <param name="context">The compile context.</param>
         /// <returns>The generator result.</returns>
         [SecurityCritical]
-        private string GetGeneratorResult(RazorEngineHost host, TypeContext context)
+        private string GetGeneratorResult(IEnumerable<string> namespaces, TypeContext context)
         {
-            var engine = new RazorTemplateEngine(host);
-            GeneratorResults result;
+            var razorEngine = RazorEngine.Create(builder =>
+            {
+                builder
+                    .SetNamespace(DynamicTemplateNamespace)
+                    //.SetBaseType("Microsoft.Extensions.RazorViews.BaseView")
+                    .SetBaseType(BuildTypeName(context.TemplateType, context.ModelType))
+                    .ConfigureClass((document, @class) =>
+                    {
+                        @class.ClassName = context.ClassName;
+                        //if (!str  ing.IsNullOrWhiteSpace(document.Source.FilePath))
+                        //{
+                        //    @class.ClassName = Path.GetFileNameWithoutExtension(document.Source.FilePath);
+                        //}
+                        @class.Modifiers.Clear();
+                        @class.Modifiers.Add("internal");
+                    });
+                builder.Features.Add(new SuppressChecksumOptionsFeature());
+            });
+            string importString = @"
+@using System
+@using System.Threading.Tasks
+";
+            importString += String.Join("\r\n", namespaces.Select(n => "@using " + n.Trim())) + "\r\n";
+
             using (var reader = context.TemplateContent.GetTemplateReader())
-                result = engine.GenerateCode(reader, null, null, context.TemplateContent.TemplateFile);
-            return InspectSource(result, context);
+            {
+                string path = null;
+                if (string.IsNullOrWhiteSpace(context.TemplateContent.TemplateFile))
+                {
+                    path = Directory.GetCurrentDirectory();
+                }
+                else
+                {
+                    path = Path.GetDirectoryName(context.TemplateContent.TemplateFile);
+                }
+                var razorProject = RazorProject.Create(path);
+                var templateEngine = new RazorTemplateEngine(razorEngine, razorProject);
+                templateEngine.Options.DefaultImports = RazorSourceDocument.Create(importString, fileName: null);
+                RazorPageGeneratorResult result;
+                if (string.IsNullOrWhiteSpace(context.TemplateContent.TemplateFile))
+                {
+                    var item = RazorSourceDocument.Create(context.TemplateContent.Template, null);
+                    var imports = new List<RazorSourceDocument>();
+                    imports.Add(templateEngine.Options.DefaultImports);
+                    var doc = RazorCodeDocument.Create(item, imports);
+                    result = GenerateCodeFile(templateEngine, doc);
+                }
+                else
+                {
+                    var item = razorProject.GetItem(context.TemplateContent.TemplateFile);
+                    result = GenerateCodeFile(templateEngine, item);
+                }
+                return InspectSource(result, context);
+            }
+        }
+
+
+        private static RazorPageGeneratorResult GenerateCodeFile(RazorTemplateEngine templateEngine, RazorProjectItem projectItem)
+        {
+            var projectItemWrapper = new FileSystemRazorProjectItemWrapper(projectItem);
+            var cSharpDocument = templateEngine.GenerateCode(projectItemWrapper);
+            if (cSharpDocument.Diagnostics.Any())
+            {
+                var diagnostics = string.Join(Environment.NewLine, cSharpDocument.Diagnostics);
+                Console.WriteLine($"One or more parse errors encountered. This will not prevent the generator from continuing: {Environment.NewLine}{diagnostics}.");
+            }
+
+            var generatedCodeFilePath = Path.ChangeExtension(projectItem.PhysicalPath, ".Designer.cs");
+            return new RazorPageGeneratorResult
+            {
+                FilePath = generatedCodeFilePath,
+                GeneratedCode = cSharpDocument.GeneratedCode,
+            };
+        }
+        private static RazorPageGeneratorResult GenerateCodeFile(RazorTemplateEngine templateEngine, RazorCodeDocument document)
+        {
+            var cSharpDocument = templateEngine.GenerateCode(document);
+            if (cSharpDocument.Diagnostics.Any())
+            {
+                var diagnostics = string.Join(Environment.NewLine, cSharpDocument.Diagnostics);
+                Console.WriteLine($"One or more parse errors encountered. This will not prevent the generator from continuing: {Environment.NewLine}{diagnostics}.");
+            }
+
+            return new RazorPageGeneratorResult
+            {
+                FilePath = null,
+                GeneratedCode = cSharpDocument.GeneratedCode,
+            };
         }
 
         /// <summary>
@@ -375,7 +406,7 @@
                 ReferenceResolver.GetReferences(
                     context,
                     IncludeAssemblies()
-                        .Select(RazorEngine.Compilation.ReferenceResolver.CompilerReference.From)
+                        .Select(CompilerReference.From)
                         .Concat(IncludeReferences()))
 #pragma warning restore 0618 // Backwards Compat.
                 .ToList();
@@ -426,5 +457,75 @@
         }
 
         #endregion
+
+        //https://github.com/aspnet/Razor/blob/b70815e317298c3078fff7ed6e21fa9b5738949f/src/RazorPageGenerator/Program.cs
+        private class SuppressChecksumOptionsFeature : RazorEngineFeatureBase, IConfigureRazorCodeGenerationOptionsFeature
+        {
+            public int Order { get; set; }
+
+            public void Configure(RazorCodeGenerationOptionsBuilder options)
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                options.SuppressChecksum = true;
+            }
+        }
+
+        private class FileSystemRazorProjectItemWrapper : RazorProjectItem
+        {
+            private readonly RazorProjectItem _source;
+
+            public FileSystemRazorProjectItemWrapper(RazorProjectItem item)
+            {
+                _source = item;
+            }
+
+            public override string BasePath => _source.BasePath;
+
+            public override string FilePath => _source.FilePath;
+
+            // Mask the full name since we don't want a developer's local file paths to be commited.
+            public override string PhysicalPath => _source.FileName;
+
+            public override bool Exists => _source.Exists;
+
+            public override Stream Read()
+            {
+                var processedContent = ProcessFileIncludes();
+                return new MemoryStream(System.Text.Encoding.UTF8.GetBytes(processedContent));
+            }
+
+            private string ProcessFileIncludes()
+            {
+                var basePath = System.IO.Path.GetDirectoryName(_source.PhysicalPath);
+                var cshtmlContent = File.ReadAllText(_source.PhysicalPath);
+
+                var startMatch = "<%$ include: ";
+                var endMatch = " %>";
+                var startIndex = 0;
+                while (startIndex < cshtmlContent.Length)
+                {
+                    startIndex = cshtmlContent.IndexOf(startMatch, startIndex);
+                    if (startIndex == -1)
+                    {
+                        break;
+                    }
+                    var endIndex = cshtmlContent.IndexOf(endMatch, startIndex);
+                    if (endIndex == -1)
+                    {
+                        throw new InvalidOperationException($"Invalid include file format in {_source.PhysicalPath}. Usage example: <%$ include: ErrorPage.js %>");
+                    }
+                    var includeFileName = cshtmlContent.Substring(startIndex + startMatch.Length, endIndex - (startIndex + startMatch.Length));
+                    Console.WriteLine("      Inlining file {0}", includeFileName);
+                    var includeFileContent = File.ReadAllText(System.IO.Path.Combine(basePath, includeFileName));
+                    cshtmlContent = cshtmlContent.Substring(0, startIndex) + includeFileContent + cshtmlContent.Substring(endIndex + endMatch.Length);
+                    startIndex = startIndex + includeFileContent.Length;
+                }
+                return cshtmlContent;
+            }
+        }
     }
 }

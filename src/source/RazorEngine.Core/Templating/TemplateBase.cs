@@ -171,7 +171,7 @@ namespace RazorEngine.Templating
         /// Executes the compiled template.
         /// </summary>
 #if RAZOR4
-        public virtual Task Execute() { return Task.FromResult(0); }
+        public virtual Task ExecuteAsync() { return Task.FromResult(0); }
 #else
         public virtual void Execute() { }
 #endif
@@ -227,7 +227,7 @@ namespace RazorEngine.Templating
             {
                 _context.CurrentWriter = writer;
 #if RAZOR4
-                await Execute();
+                await ExecuteAsync();
 #else
                 Execute();
 #endif

@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 #if RAZOR4
-using Microsoft.AspNetCore.Razor.Parser;
 using Microsoft.AspNetCore.Razor;
 #else
 using System.Web.Razor.Parser;
@@ -152,8 +151,8 @@ namespace RazorEngine.Roslyn.CSharp
         /// <param name="codeLanguage"></param>
         /// <param name="markupParserFactory"></param>
         [SecuritySafeCritical]
-        public RoslynCompilerServiceBase(RazorCodeLanguage codeLanguage, Func<ParserBase> markupParserFactory)
-            : base(codeLanguage, new ParserBaseCreator(markupParserFactory))
+        public RoslynCompilerServiceBase()
+            : base()
         {
 
         }
