@@ -20,24 +20,35 @@
     <AssemblyOriginatorKeyFile>RazorEngine.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <RootNamespace>RazorEngine</RootNamespace>
-    <AssemblyName>RazorEngine.NetCore</AssemblyName>
+    <PackageId>RazorEngine.Core.NetCore</PackageId>
+    <AssemblyName>RazorEngine.Core.NetCore</AssemblyName>
+    <PackageTags>RazorEngine;aspnetcore;NetCore</PackageTags>
+    <Authors>Connie Yau</Authors>
+    <Description>
+      https://github.com/Antaris/RazorEngine/issues/414
+      Fork from https://github.com/conniey/RazorEngine/tree/updateToNetCore
+      Minor fixing and fork to https://github.com/hermanho/RazorEngine/tree/updateToNetCore
+    </Description>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/hermanho/RazorEngine/tree/updateToNetCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/hermanho/RazorEngine/tree/updateToNetCore</PackageProjectUrl>
+    <Version>4.5.1-rc1</Version>
+    <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2017</Copyright>
+    <Company>RazorEngine</Company>
+    <Product>RazorEngine</Product>
+    <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\..\SharedAssemblyInfo-Razor4.cs">
-      <Link>Properties\SharedAssemblyInfo-Razor4.cs</Link>
-    </Compile>
-  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="2.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.3.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="2.0.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.6.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
-    <PackageReference Include="Microsoft.CSharp" Version="4.4.0" />
-    <PackageReference Include="System.Security.Permissions" Version="4.4.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.1" />
+    <PackageReference Include="System.Security.Permissions" Version="4.4.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
