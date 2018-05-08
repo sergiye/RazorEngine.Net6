@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RazorEngine.Compilation;
-using RazorEngine.Compilation.Inspectors;
 using RazorEngine.Compilation.ReferenceResolver;
 using RazorEngine.Templating;
 using RazorEngine.Text;
@@ -20,10 +19,6 @@ namespace RazorEngine.Configuration
         private readonly bool _allowMissingPropertiesOnDynamic;
         private readonly Type _baseTemplateType;
         private readonly ICachingProvider _cachingProvider;
-#if !RAZOR4
-        [Obsolete("This API is obsolete and will be removed in the next version(Razor4 doesn't use CodeDom for code-generation)!")]
-        private readonly IEnumerable<ICodeInspector> _codeInspectors;
-#endif
         private readonly ICompilerServiceFactory _compilerServiceFactory;
         private readonly bool _debug;
         private readonly bool _disableTempFileLocking;
@@ -31,10 +26,6 @@ namespace RazorEngine.Configuration
         private readonly Language _language;
         private readonly ISet<string> _namespaces;
         private readonly IReferenceResolver _referenceResolver;
-#if !NO_CONFIGURATION
-        [Obsolete("Use TemplateManager instead")]
-        private readonly ITemplateResolver _resolver;
-#endif
         private readonly ITemplateManager _templateManager;
 
         /// <summary>
@@ -68,18 +59,7 @@ namespace RazorEngine.Configuration
             {
                 throw new ArgumentNullException("config", "the configured CachingProvider cannot be null!");
             }
-
-#if !RAZOR4
-#pragma warning disable 0618 // Backwards Compat.
-            _codeInspectors = config.CodeInspectors;
-            if (_codeInspectors == null)
-            {
-                throw new ArgumentNullException("config", "the configured CodeInspectos cannot be null!");
-            }
-            _codeInspectors = new List<ICodeInspector>(_codeInspectors);
-#pragma warning restore 0618 // Backwards Compat.
-#endif
-
+            
             _compilerServiceFactory = config.CompilerServiceFactory;
             if (_compilerServiceFactory == null)
             {
@@ -176,20 +156,6 @@ namespace RazorEngine.Configuration
                 return _cachingProvider;
             }
         }
-
-#if !RAZOR4
-        /// <summary>
-        /// Gets the code inspectors.
-        /// </summary>
-        [Obsolete("This API is obsolete and will be removed in the next version (Razor4 doesn't use CodeDom for code-generation)!")]
-        public IEnumerable<ICodeInspector> CodeInspectors
-        {
-            get
-            {
-                return _codeInspectors;
-            }
-        }
-#endif
 
         /// <summary>
         /// Gets the compiler service factory.

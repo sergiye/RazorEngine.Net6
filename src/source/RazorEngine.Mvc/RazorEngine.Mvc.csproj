@@ -46,12 +46,6 @@
     <Compile Include="MvcTemplateBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RazorEngine.Core\RazorEngine.Core.csproj">
-      <Project>{D268F86D-2DAB-4329-A75F-3BCF6D5BCDC4}</Project>
-      <Name>RazorEngine.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(CSharpTargetsPath)" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

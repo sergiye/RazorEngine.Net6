@@ -189,22 +189,7 @@ More details about the error:
         /// Gets the set of compiler errors.
         /// </summary>
         public ReadOnlyCollection<RazorEngineCompilerError> CompilerErrors { get; private set; }
-
-#if !RAZOR4
-        /// <summary>
-        /// Gets the set of compiler errors.
-        /// </summary>
-        [Obsolete("Use CompilerErrors instead, will be removed in 4.0.0")]
-        public ReadOnlyCollection<CompilerError> Errors
-        {
-            get
-            {
-                return new ReadOnlyCollection<CompilerError>(
-                    CompilerErrors.Select(error => new CompilerError(error.FileName, error.Line, error.Column, error.ErrorNumber, error.ErrorText)).ToList());
-            }
-        }
-#endif
-
+        
         /// <summary>
         /// Gets some copilation specific (temporary) data.
         /// </summary>

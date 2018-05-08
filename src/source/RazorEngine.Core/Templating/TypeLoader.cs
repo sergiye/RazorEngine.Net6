@@ -105,7 +105,6 @@
         [SecuritySafeCritical]
         private static Func<ITemplate> GetConstructorInternal(Type type)
         {
-            (new PermissionSet(PermissionState.Unrestricted)).Assert();
             var method = type.GetConstructor(new Type[0]);
 
             var result = Expression.Lambda<Func<ITemplate>>(

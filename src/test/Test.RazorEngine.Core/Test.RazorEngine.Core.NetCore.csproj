@@ -1,12 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
-    <DefineConstants>$(DefineConstants);NET45;RAZOR4;</DefineConstants>
-    <!-- TODO: Move this between Lines 12-14.
-    These should be under a property group just for .NET Core App 2.0.
-    This is here to ensure that the behaviour in .NET 4.6.2 and .NET Core App 2.0 are the same.
-    -->
-    <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_REMOTING;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <DefineConstants>$(DefineConstants);NET45;RAZOR4;NO_APPDOMAIN;NO_REMOTING;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <OutputType>Exe</OutputType>

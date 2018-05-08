@@ -6,12 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-#if RAZOR4
 using Microsoft.AspNetCore.Razor;
-#else
-using System.Web.Razor.Parser;
-using System.Web.Razor;
-#endif
 using Microsoft.CodeAnalysis.Text;
 using System.IO;
 using System.Reflection;
@@ -200,7 +195,6 @@ namespace RazorEngine.Roslyn.CSharp
             var sourceCode = GetCodeCompileUnit(context);
             var assemblyName = GetAssemblyName(context);
 
-            (new PermissionSet(PermissionState.Unrestricted)).Assert();
             var tempDir = GetTemporaryDirectory();
 
             var sourceCodeFile = Path.Combine(tempDir, String.Format("{0}.{1}", assemblyName, SourceFileExtension));

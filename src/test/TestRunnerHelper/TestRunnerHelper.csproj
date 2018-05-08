@@ -50,10 +50,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\source\RazorEngine.Core\RazorEngine.Core.csproj">
-      <Project>{d268f86d-2dab-4329-a75f-3bcf6d5bcdc4}</Project>
-      <Name>RazorEngine.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\source\RazorEngine.Hosts.Console\RazorEngine.Hosts.Console.csproj">
       <Project>{bc7891a1-8459-4a69-a37c-f40824e28c70}</Project>
       <Name>RazorEngine.Hosts.Console</Name>
@@ -65,10 +61,6 @@
     <ProjectReference Include="..\Test.RazorEngine.Core.Roslyn\Test.RazorEngine.Core.Roslyn.csproj">
       <Project>{7cb02f9f-7e88-448b-a25b-7985058296c5}</Project>
       <Name>Test.RazorEngine.Core.Roslyn</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Test.RazorEngine.Core\Test.RazorEngine.Core.csproj">
-      <Project>{f4f5ab5f-bf81-4c0c-8f2e-68ab02160c4e}</Project>
-      <Name>Test.RazorEngine.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

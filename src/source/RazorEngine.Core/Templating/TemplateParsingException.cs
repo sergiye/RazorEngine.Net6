@@ -4,10 +4,6 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.Serialization;
     using System.Security;
-#if RAZOR4
-#else
-    using System.Web.Razor.Parser.SyntaxTree;
-#endif
 
     /// <summary>
     /// Defines an exception that occurs during template parsing.

@@ -139,41 +139,41 @@ namespace Test.RazorEngine.Core.Roslyn
             }, (c) => c.EncodedStringFactory = new RawStringFactory());
         }
 
-        /// <summary>
-        /// Tests that the compilation message is useful.
-        /// </summary>
-        [Test]
-        public void Roslyn_GetInformativeErrorMessage()
-        {
-            RunTestHelper(service =>
-            {
-                const string template = "@foreach (var i in Model.Unknown) { @i }";
-                var exn = Assert.Throws<TemplateCompilationException>(() =>
-                {
-                    string result = service.RunCompile(template, "test", typeof(object), new object());
-                });
-                exn.CompilationData.DeleteAll();
-                var msg = exn.Message;
-                var errorMessage =
-                    string.Format(
-                        "An expected substring ({{0}}) was not found in: {0}",
-                        msg.Replace("{", "{{").Replace("}", "}}"));
+        ///// <summary>
+        ///// Tests that the compilation message is useful.
+        ///// </summary>
+        //[Test]
+        //public void Roslyn_GetInformativeErrorMessage()
+        //{
+        //    RunTestHelper(service =>
+        //    {
+        //        const string template = "@foreach (var i in Model.Unknown) { @i }";
+        //        var exn = Assert.Throws<TemplateCompilationException>(() =>
+        //        {
+        //            string result = service.RunCompile(template, "test", typeof(object), new object());
+        //        });
+        //        exn.CompilationData.DeleteAll();
+        //        var msg = exn.Message;
+        //        var errorMessage =
+        //            string.Format(
+        //                "An expected substring ({{0}}) was not found in: {0}",
+        //                msg.Replace("{", "{{").Replace("}", "}}"));
 
-                // Compiler error
-                Assert.IsTrue(
-                    msg.Contains("does not contain a definition for"),
-                    string.Format(errorMessage, "compiler error"));
-                // Template
-                Assert.IsTrue(msg.Contains(template),
-                    string.Format(errorMessage, "template"));
-                // Temp files
-                Assert.IsTrue(msg.Contains("Temporary files of the compilation can be found"),
-                    string.Format(errorMessage, "temp files"));
-                // C# source code
-                Assert.IsTrue(msg.Contains("namespace " + CompilerServiceBase.DynamicTemplateNamespace),
-                    string.Format(errorMessage, "C# source"));
-            });
-        }
+        //        // Compiler error
+        //        Assert.IsTrue(
+        //            msg.Contains("does not contain a definition for"),
+        //            string.Format(errorMessage, "compiler error"));
+        //        // Template
+        //        Assert.IsTrue(msg.Contains(template),
+        //            string.Format(errorMessage, "template"));
+        //        // Temp files
+        //        Assert.IsTrue(msg.Contains("Temporary files of the compilation can be found"),
+        //            string.Format(errorMessage, "temp files"));
+        //        // C# source code
+        //        Assert.IsTrue(msg.Contains("namespace " + CompilerServiceBase.DynamicTemplateNamespace),
+        //            string.Format(errorMessage, "C# source"));
+        //    });
+        //}
 
         /// <summary>
         /// Tests that a runtime exception is useful.
@@ -208,32 +208,32 @@ namespace Test.RazorEngine.Core.Roslyn
             });
         }
 
-        /// <summary>
-        /// Tests whether we can delete tempfiles when DisableTempFileLocking is true.
-        /// </summary>
-        [Test]
-        public void Roslyn_TestDisableTempFileLocking()
-        {
-            var cache = new DefaultCachingProvider(t => { });
-            var template = "@Model.Property";
-            RunTestHelper(service =>
-            {
-                var model = new { Property = 0 };
-                string result = service.RunCompile(template, "key", null, model);
-                Assert.AreEqual("0", result.Trim());
-            }, config =>
-            {
-                config.Debug = false;
-                config.CachingProvider = cache;
-                config.DisableTempFileLocking = true;
-            });
-            ICompiledTemplate compiledTemplate;
-            Assert.IsTrue(cache.TryRetrieveTemplate(new NameOnlyTemplateKey("key", ResolveType.Global, null), null, out compiledTemplate));
-            var data = compiledTemplate.CompilationData;
-            var folder = data.TmpFolder;
-            Assert.IsTrue(Directory.Exists(folder));
-            data.DeleteAll();
-            Assert.IsFalse(Directory.Exists(folder));
-        }
+        ///// <summary>
+        ///// Tests whether we can delete tempfiles when DisableTempFileLocking is true.
+        ///// </summary>
+        //[Test]
+        //public void Roslyn_TestDisableTempFileLocking()
+        //{
+        //    var cache = new DefaultCachingProvider(t => { });
+        //    var template = "@Model.Property";
+        //    RunTestHelper(service =>
+        //    {
+        //        var model = new { Property = 0 };
+        //        string result = service.RunCompile(template, "key", null, model);
+        //        Assert.AreEqual("0", result.Trim());
+        //    }, config =>
+        //    {
+        //        config.Debug = false;
+        //        config.CachingProvider = cache;
+        //        config.DisableTempFileLocking = true;
+        //    });
+        //    ICompiledTemplate compiledTemplate;
+        //    Assert.IsTrue(cache.TryRetrieveTemplate(new NameOnlyTemplateKey("key", ResolveType.Global, null), null, out compiledTemplate));
+        //    var data = compiledTemplate.CompilationData;
+        //    var folder = data.TmpFolder;
+        //    Assert.IsTrue(Directory.Exists(folder));
+        //    data.DeleteAll();
+        //    Assert.IsFalse(Directory.Exists(folder));
+        //}
     }
 }

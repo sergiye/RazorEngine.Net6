@@ -6,17 +6,8 @@
     using System.Diagnostics.Contracts;
     using System.IO;
     using System.Linq;
-#if RAZOR4
     using Microsoft.AspNetCore.Razor;
     using Microsoft.AspNetCore.Razor.Language;
-#else
-    using System.Web.Razor;
-    using System.Web.Razor.Generator;
-    using System.Web.Razor.Parser;
-    using System.CodeDom.Compiler;
-#endif
-
-    using Inspectors;
     using Templating;
     using RazorEngine.Compilation.ReferenceResolver;
     using System.Security;
@@ -49,13 +40,6 @@
         #endregion
 
         #region Properties
-#if !RAZOR4
-        /// <summary>
-        /// Gets or sets the set of code inspectors.
-        /// </summary>
-        [Obsolete("This API is obsolete and will be removed in the next version (Razor4 doesn't use CodeDom for code-generation)!")]
-        public IEnumerable<ICodeInspector> CodeInspectors { get; set; }
-#endif
 
         /// <summary>
         /// Gets or sets the assembly resolver.
@@ -154,39 +138,7 @@
         /// <param name="modelType">The model type.</param>
         /// <param name="className">The class name.</param>
         /// <returns>An instance of <see cref="RazorEngineHost"/>.</returns>
-
-#if !RAZOR4
-        [SecurityCritical]
-        private RazorEngineHost CreateHost(Type templateType, Type modelType, string className)
-        {
-            var host =
-                new RazorEngineHost(CodeLanguage, MarkupParserFactory.Create)
-                {
-                    DefaultBaseTemplateType = templateType,
-                    DefaultModelType = modelType,
-                    DefaultBaseClass = BuildTypeName(templateType, modelType),
-                    DefaultClassName = className,
-                    DefaultNamespace = DynamicTemplateNamespace,
-                    GeneratedClassContext =
-                        new GeneratedClassContext(
-                            "Execute", "Write", "WriteLiteral", "WriteTo", "WriteLiteralTo",
-                            "RazorEngine.Templating.TemplateWriter", "DefineSection"
-#if RAZOR4
-                            , new GeneratedTagHelperContext()
-#endif
-                        )
-#if !RAZOR4
-                        {
-                            ResolveUrlMethodName = "ResolveUrl"
-                        }
-#endif
-                };
-
-            return host;
-        }
-#endif
-
-
+        
         /// <summary>
         /// Gets the source code from Razor for the given template.
         /// </summary>
@@ -413,26 +365,7 @@
             context.AddReferences(references);
             return references;
         }
-
-#if !RAZOR4
-        /// <summary>
-        /// Inspects the generated code compile unit.
-        /// </summary>
-        /// <param name="unit">The code compile unit.</param>
-        [Obsolete("Will be removed in 4.x")]
-        protected virtual void Inspect(CodeCompileUnit unit)
-        {
-            Contract.Requires(unit != null);
-
-            var ns = unit.Namespaces[0];
-            var type = ns.Types[0];
-            var executeMethod = type.Members.OfType<CodeMemberMethod>().Where(m => m.Name.Equals("Execute")).Single();
-
-            foreach (var inspector in CodeInspectors)
-                inspector.Inspect(unit, ns, type, executeMethod);
-        }
-#endif
-
+        
         /// <summary>
         /// Disposes the current instance.
         /// </summary>
