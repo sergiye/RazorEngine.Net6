@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.RazorEngine.Core.Rosly
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.RazorEngine.Core.NetCore", "test\Test.RazorEngine.Core\Test.RazorEngine.Core.NetCore.csproj", "{A9702213-B89A-45A7-AF92-58E08DA1E197}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.RazorEngine.NUnitRunner", "test\Test.RazorEngine.NUnitRunner\Test.RazorEngine.NUnitRunner.csproj", "{57A0CF9C-92C5-403A-A847-88981519AE2A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{A9702213-B89A-45A7-AF92-58E08DA1E197}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9702213-B89A-45A7-AF92-58E08DA1E197}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9702213-B89A-45A7-AF92-58E08DA1E197}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57A0CF9C-92C5-403A-A847-88981519AE2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57A0CF9C-92C5-403A-A847-88981519AE2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57A0CF9C-92C5-403A-A847-88981519AE2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57A0CF9C-92C5-403A-A847-88981519AE2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
