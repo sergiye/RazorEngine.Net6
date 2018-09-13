@@ -5,18 +5,18 @@ environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 install:
 before_build:
-  - dotnet restore
+  - dotnet restore ./src/RazorEngine.NetCore.sln
 init:
   - git config --global core.autocrlf input
 build_script:
-  - dotnet build -c Release RazorEngine.NetCore.sln
+  - dotnet build -c Release ./src/RazorEngine.NetCore.sln
 before_test:
 test_script:
-  - dotnet test -c Release  .\src\test\Test.RazorEngine.Core\Test.RazorEngine.Core.NetCore.csproj
-  - dotnet test -c Release  .\src\test\Test.RazorEngine.Core\Test.RazorEngine.Core.Roslyn\Test.RazorEngine.Core.Roslyn.NetCore.csproj
+  - dotnet test -c Release .\src\test\Test.RazorEngine.Core\Test.RazorEngine.Core.NetCore.csproj
+  - dotnet test -c Release .\src\test\Test.RazorEngine.Core.Roslyn\Test.RazorEngine.Core.Roslyn.NetCore.csproj
 after_test:
   - mkdir .\artifacts
-  - dotnet pack .\src\source\RazorEngine.Core -c Release -o ..\..\..\artifacts --version-suffix=-build%APPVEYOR_BUILD_NUMBER%
+  - dotnet pack .\src\source\RazorEngine.Core\RazorEngine.Core.NetCore.csproj -c Release -o ..\..\..\artifacts --version-suffix=-build%APPVEYOR_BUILD_NUMBER%
 artifacts:
 - path: .\artifacts\**\*.nupkg
   name: NuGet
