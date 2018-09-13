@@ -1,4 +1,4 @@
-﻿# Layout and Partial templates
+# Layout and Partial templates
 
 This section explains how you can use Layout templates and embed templates one in another.
 

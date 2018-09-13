@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Tests.TestTypes.Inspectors
+namespace RazorEngine.Tests.TestTypes.Inspectors
 {
     using System.CodeDom;
 

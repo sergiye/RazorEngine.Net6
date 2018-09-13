@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Mvc
+namespace RazorEngine.Mvc
 {
     using System;
     using System.Web;

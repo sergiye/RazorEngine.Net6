@@ -1,4 +1,4 @@
-﻿# ITemplateManager and ICachingProvider
+# ITemplateManager and ICachingProvider
 
 This section explains how `ITemplateManager` and `ICachingProvider` work and play together, 
 which implementations are available by default and how to write your own.

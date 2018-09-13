@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Compilation
+namespace RazorEngine.Compilation
 {
     using RazorEngine.Templating;
     using ReferenceResolver;

@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Templating
+namespace RazorEngine.Templating
 {
     using RazorEngine.Compilation;
     using System;

@@ -1,4 +1,4 @@
-﻿namespace RazorEngine
+namespace RazorEngine
 {
     /// <summary>
     /// Defines the possible supported code languages.

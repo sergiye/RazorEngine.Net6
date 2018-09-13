@@ -1,4 +1,4 @@
-﻿using RazorEngine.Configuration;
+using RazorEngine.Configuration;
 using System;
 using System.IO;
 namespace RazorEngine.Templating

@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Text
+namespace RazorEngine.Text
 {
     using System.Net;
 

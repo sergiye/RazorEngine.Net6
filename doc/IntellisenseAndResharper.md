@@ -1,4 +1,4 @@
-﻿# Intellisense and ReSharper
+# Intellisense and ReSharper
 
 It is often convenient to have your razor templates as file resources in your project and edit them 
 like you would a normal ASP.NET MVC view as `*.cshtml` files and provide them to RazorEngine as a string. 

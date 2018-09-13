@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Tests.TestTypes.Issues
+namespace RazorEngine.Tests.TestTypes.Issues
 {
     using System.IO;
     using System.Linq;

@@ -1,4 +1,4 @@
-﻿# Template basics
+# Template basics
 
 ## Getting Started
 

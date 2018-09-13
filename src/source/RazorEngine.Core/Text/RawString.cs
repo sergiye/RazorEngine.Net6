@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Text
+namespace RazorEngine.Text
 {
     /// <summary>
     /// Represents an unencoded string.

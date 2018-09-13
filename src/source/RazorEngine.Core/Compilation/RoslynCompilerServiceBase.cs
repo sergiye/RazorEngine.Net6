@@ -1,4 +1,4 @@
-﻿using RazorEngine.Compilation;
+using RazorEngine.Compilation;
 using RazorEngine.Compilation.ReferenceResolver;
 using System;
 using System.Collections.Generic;

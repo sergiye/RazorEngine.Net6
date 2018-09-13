@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Tests.TestTypes.Activation
+namespace RazorEngine.Tests.TestTypes.Activation
 {
     using System;
 #if NET45

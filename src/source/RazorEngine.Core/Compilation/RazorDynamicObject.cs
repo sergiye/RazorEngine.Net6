@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Compilation
+namespace RazorEngine.Compilation
 {
     using RazorEngine.Compilation.ImpromptuInterface;
     using RazorEngine.Compilation.ImpromptuInterface.Dynamic;

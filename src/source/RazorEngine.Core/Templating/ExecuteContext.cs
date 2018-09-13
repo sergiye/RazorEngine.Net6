@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Templating
+namespace RazorEngine.Templating
 {
     using Microsoft.AspNetCore.Mvc.Razor;
     using System;

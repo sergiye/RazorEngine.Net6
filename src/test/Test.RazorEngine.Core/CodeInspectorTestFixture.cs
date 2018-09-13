@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Tests
+namespace RazorEngine.Tests
 {
     using System;
 

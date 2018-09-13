@@ -1,4 +1,4 @@
-﻿# Reference Resolver
+# Reference Resolver
 
 Templates are first transformed to a source code file and then dynamically compiled by invoking the compiler.
 Because you can use source code within the template itself you are free to use any libraries within a template.

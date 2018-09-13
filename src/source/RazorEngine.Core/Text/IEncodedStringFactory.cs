@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Text
+namespace RazorEngine.Text
 {
     /// <summary>
     /// Defines the required contract for implementing a factory for building encoded strings.

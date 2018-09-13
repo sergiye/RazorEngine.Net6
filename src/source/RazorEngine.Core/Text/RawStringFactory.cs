@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Text
+namespace RazorEngine.Text
 {
     /// <summary>
     /// Represents a factory that creates <see cref="RawString"/> instances.

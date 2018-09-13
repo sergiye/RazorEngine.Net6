@@ -1,4 +1,4 @@
-﻿namespace Test.RazorEngine.Templating.Templates
+namespace Test.RazorEngine.Templating.Templates
 {
     /// <summary>
     /// Model used for EmbeddedResourceTemplateManager testing

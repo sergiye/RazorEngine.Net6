@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Hosts.Console
+namespace RazorEngine.Hosts.Console
 {
     using System;
     using System.Linq;

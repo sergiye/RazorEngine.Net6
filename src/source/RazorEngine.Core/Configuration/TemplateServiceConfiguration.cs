@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Configuration
+namespace RazorEngine.Configuration
 {
     using System;
     using System.Collections.Generic;

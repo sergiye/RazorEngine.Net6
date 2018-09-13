@@ -1,4 +1,4 @@
-﻿using RazorEngine.Compilation.ImpromptuInterface;
+using RazorEngine.Compilation.ImpromptuInterface;
 using NUnit.Framework;
 using RazorEngine.Compilation;
 using RazorEngine.Compilation.ReferenceResolver;

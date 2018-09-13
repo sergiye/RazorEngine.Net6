@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Templating
+namespace RazorEngine.Templating
 {
     /// <summary>
     /// Defines the required contract for implementing a template-manager.

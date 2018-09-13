@@ -1,4 +1,4 @@
-﻿using RazorEngine.Tests.TestTypes.BaseTypes;
+using RazorEngine.Tests.TestTypes.BaseTypes;
 
 namespace RazorEngine.Tests
 {

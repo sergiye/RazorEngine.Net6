@@ -1,4 +1,4 @@
-﻿# Upgrading RazorEngine.
+# Upgrading RazorEngine.
 
 
 ## Upgrading to 4.x.

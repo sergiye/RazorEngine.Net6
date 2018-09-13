@@ -1,4 +1,4 @@
-﻿using RazorEngine.Configuration;
+using RazorEngine.Configuration;
 using RazorEngine.Text;
 using System;
 using System.Collections.Generic;

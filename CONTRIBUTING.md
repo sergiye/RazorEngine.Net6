@@ -1,4 +1,4 @@
-﻿Thanks that you want to help! Please read the sections below.
+Thanks that you want to help! Please read the sections below.
 
 ## Contributing (General)
 

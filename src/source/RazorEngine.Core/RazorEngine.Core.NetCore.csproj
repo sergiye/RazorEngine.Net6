@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE;RAZOR4</DefineConstants>
@@ -24,6 +24,7 @@
     <RepositoryUrl>https://github.com/hermanho/RazorEngine/tree/updateToNetCore</RepositoryUrl>
     <PackageProjectUrl>https://github.com/hermanho/RazorEngine/tree/updateToNetCore</PackageProjectUrl>
     <Version>4.6.0-rc1</Version>
+    <VersionPrefix>4.6.0</VersionPrefix>
     <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2017</Copyright>
     <Company>RazorEngine</Company>
     <Product>RazorEngine</Product>

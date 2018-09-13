@@ -1,4 +1,4 @@
-﻿# About Razor and its syntax
+# About Razor and its syntax
 
 ## About Razor
 The Razor parser was introduced as part of the [ASP.NET](http://www.asp.net) MVC and WebPages release by Microsoft. The Razor parser itself is designed to process a stream of characters to generate a C# or VB class which can be compiled.

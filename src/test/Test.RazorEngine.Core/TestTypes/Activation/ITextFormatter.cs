@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Tests.TestTypes.Activation
+namespace RazorEngine.Tests.TestTypes.Activation
 {
     /// <summary>
     /// Defines the required contract for implementing a text formatter.

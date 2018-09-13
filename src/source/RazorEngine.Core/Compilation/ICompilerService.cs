@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Compilation
+namespace RazorEngine.Compilation
 {
     using System;
     using System.Collections.Generic;

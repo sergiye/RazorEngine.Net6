@@ -1,4 +1,4 @@
-﻿namespace RazorEngine.Tests.TestTypes
+namespace RazorEngine.Tests.TestTypes
 {
     using System;
 

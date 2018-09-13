@@ -1,4 +1,4 @@
-﻿### 3.10.0 / 4.5.0-rc1
+### 3.10.0 / 4.5.0-rc1
 
  * (NEW) Add a simple way to create typed, runnable templates, thanks ocoanet (https://github.com/Antaris/RazorEngine/pull/431)
  * (NEW) Adding in temporary file path configuration, thanks brentonlamar (https://github.com/Antaris/RazorEngine/pull/400)
