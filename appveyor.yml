@@ -1,15 +1,30 @@
+version: 4.6.0-build{build}
+image: Visual Studio 2017
+environment:
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+install:
+before_build:
+  - dotnet restore
 init:
   - git config --global core.autocrlf input
 build_script:
-  - cmd: build.cmd
-test: off
-version: 0.0.1.{build}
+  - dotnet build -c Release RazorEngine.NetCore.sln
+before_test:
+test_script:
+  - dotnet test -c Release  .\src\test\Test.RazorEngine.Core\Test.RazorEngine.Core.NetCore.csproj
+  - dotnet test -c Release  .\src\test\Test.RazorEngine.Core\Test.RazorEngine.Core.Roslyn\Test.RazorEngine.Core.Roslyn.NetCore.csproj
+after_test:
+  - mkdir .\artifacts
+  - dotnet pack .\src\source\RazorEngine.Core -c Release -o ..\..\..\artifacts --version-suffix=-build%APPVEYOR_BUILD_NUMBER%
 artifacts:
-  - path: bin
-    name: bin
-    
-notifications:
-  - provider: Webhook
-    url: https://webhooks.gitter.im/e/40fcaa9afb4b47ecafe7
-    on_build_success: true
-    on_build_failure: true
+- path: .\artifacts\**\*.nupkg
+  name: NuGet
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/herman-github/api/v2/package
+  api_key:
+    secure: IlPpRIxl4Y9yCxtT5ic0pYcCtcSDg1MTO1YKtl2AORyc+zRxYUKsDob9plsEy8mE
+  skip_symbols: true
+  on:
+    branch: updateToNetCore
