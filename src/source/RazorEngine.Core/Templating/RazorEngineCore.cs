@@ -26,12 +26,7 @@
         [SecuritySafeCritical]
         internal RazorEngineCore(ReadOnlyTemplateServiceConfiguration config, RazorEngineService cached)
         {
-            if (config == null)
-            {
-                throw new ArgumentNullException("config");
-            }
-            
-            _config = config;
+            _config = config ?? throw new ArgumentNullException("config");
             _cached = cached;
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
         }
@@ -142,7 +137,9 @@
 #endif
         {
             if (template == null)
+            {
                 throw new ArgumentNullException("template");
+            }
 
             var instance = CreateTemplate(template, model, viewBag);
 #if RAZOR4

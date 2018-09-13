@@ -1,5 +1,6 @@
 namespace RazorEngine.Templating
 {
+    using Microsoft.AspNetCore.Mvc.Razor;
     using System;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
@@ -126,9 +127,9 @@ namespace RazorEngine.Templating
         /// </summary>
         /// <param name="name">The name of the section.</param>
         /// <param name="action">The delegate used to write the section.</param>
-        public void DefineSection(string name, SectionAction action)
+        public virtual void DefineSection(string name, RenderAsyncDelegate section)
         {
-            _context.DefineSection(name, action);
+            _context.DefineSection(name, section);
         }
 
         /// <summary>
@@ -278,15 +279,17 @@ namespace RazorEngine.Templating
                 throw new ArgumentException("No section has been defined with name '" + name + "'");
 
             if (action == null)
-#if RAZOR4
-                action = (tw) => { };
-#else
-                action = () => { };
-#endif
+            {
+                action = () => Task.CompletedTask;
+            }
 
             return new TemplateWriter(tw =>
             {
-                _context.PopSections(action, tw);
+                var oldWriter = _context.CurrentWriter;
+                _context.CurrentWriter = tw;
+                var t = _context.PopSections(action);
+                t.GetAwaiter().GetResult();
+                _context.CurrentWriter = oldWriter;
             });
         }
 
@@ -720,7 +723,7 @@ namespace RazorEngine.Templating
             return path;
         }
 #endif
-#endregion
+        #endregion
 
 #if RAZOR4
         private struct AttributeInfo

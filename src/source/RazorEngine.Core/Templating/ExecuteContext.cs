@@ -1,15 +1,13 @@
 ﻿namespace RazorEngine.Templating
 {
+    using Microsoft.AspNetCore.Mvc.Razor;
     using System;
     using System.Collections.Generic;
     using System.Dynamic;
     using System.IO;
+    using System.Threading.Tasks;
 
-#if RAZOR4
-    using SectionAction = System.Action<System.IO.TextWriter>;
-#else
-    using SectionAction = System.Action;
-#endif
+    public delegate Task RenderAsyncDelegate();
 
     /// <summary>
     /// Defines a context for tracking template execution.
@@ -38,7 +36,7 @@
         #region Fields
         private readonly Stack<ISet<string>> _currentSectionStack = new Stack<ISet<string>>();
         private ISet<string> _currentSections = new HashSet<string>();
-        private readonly IDictionary<string, Stack<SectionAction>> _definedSections = new Dictionary<string, Stack<SectionAction>>();
+        private readonly IDictionary<string, Stack<RenderAsyncDelegate>> _definedSections = new Dictionary<string, Stack<RenderAsyncDelegate>>();
         private readonly Stack<TemplateWriter> _bodyWriters = new Stack<TemplateWriter>();
         #endregion
 
@@ -57,18 +55,18 @@
         /// </summary>
         /// <param name="name">The name of the section.</param>
         /// <param name="action">The delegate action used to write the section at a later stage in the template execution.</param>
-        public void DefineSection(string name, SectionAction action)
+        public virtual void DefineSection(string name, RenderAsyncDelegate action)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("A name is required to define a section.");
             if (_currentSections.Contains(name))
-	            throw new ArgumentException("A section has already been defined with name '" + name + "'");
+                throw new ArgumentException("A section has already been defined with name '" + name + "'");
 
             _currentSections.Add(name);
-            Stack<SectionAction> sectionStack;
+            Stack<RenderAsyncDelegate> sectionStack;
             if (!_definedSections.TryGetValue(name, out sectionStack))
             {
-                sectionStack = new Stack<SectionAction>();
+                sectionStack = new Stack<RenderAsyncDelegate>();
                 _definedSections.Add(name, sectionStack);
             }
             sectionStack.Push(action);
@@ -79,7 +77,7 @@
         /// </summary>
         /// <param name="name">The name of the section.</param>
         /// <returns>The section delegate.</returns>
-        public SectionAction GetSectionDelegate(string name)
+        public RenderAsyncDelegate GetSectionDelegate(string name)
         {
             if (_definedSections.ContainsKey(name) && _definedSections[name].Count > 0)
                 return _definedSections[name].Peek();
@@ -93,18 +91,18 @@
         /// </summary>
         /// <param name="inner">the executing section delegate.</param>
         /// <param name="innerArg">the parameter for the delegate.</param>
-        internal void PopSections(SectionAction inner, TextWriter innerArg)
+        internal async Task PopSections(RenderAsyncDelegate inner)
         {
             var oldsections = _currentSections;
             _currentSections = _currentSectionStack.Pop();
-            var poppedSections = new List<Tuple<string, SectionAction>>();
+            var poppedSections = new List<Tuple<string, RenderAsyncDelegate>>();
             foreach (var section in _currentSections)
             {
                 var item = _definedSections[section].Pop();
                 poppedSections.Add(Tuple.Create(section, item));
             }
 #if RAZOR4
-            inner(innerArg);
+            await inner();
 #else
             var oldWriter = CurrentWriter;
             try

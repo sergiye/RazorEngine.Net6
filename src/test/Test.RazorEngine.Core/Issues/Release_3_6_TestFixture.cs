@@ -148,9 +148,9 @@
             using (var service = RazorEngineService.Create())
             {
                 string parent = @"@RenderSection(""MySection"", false)";
-                string section_test_1 = "@{ Layout = \"ParentLayout\"; }@section MySection { My section content }";
-                string section_test_2 = "@{ Layout = \"ParentLayout\"; }@section MySection {\nMy section content\n}";
-                string section_test_3 = "@{ Layout = \"ParentLayout\"; }@section MySection {\nMy section content\na}";
+                string section_test_1 = "@{ Layout = \"ParentLayout\"; }\n@section MySection { My section content }";
+                string section_test_2 = "@{ Layout = \"ParentLayout\"; }\n@section MySection {\nMy section content\n}";
+                string section_test_3 = "@{ Layout = \"ParentLayout\"; }\n@section MySection {\nMy section content\na}";
                 string expected_1 = " My section content ";
                 string expected_2 = "\nMy section content\n";
                 string expected_3 = "\nMy section content\na";
@@ -180,7 +180,8 @@
             {
                 string parentLayoutTemplate = @"<script scr=""/Scripts/jquery.js""></script>@RenderSection(""Scripts"", false)";
                 string childLayoutTemplate =
-                    @"@{ Layout = ""ParentLayout""; }@section Scripts {<script scr=""/Scripts/childlayout.js""></script>@RenderSection(""Scripts"", false)}";
+                    @"@{ Layout = ""ParentLayout""; }
+@section Scripts {<script scr=""/Scripts/childlayout.js""></script>@RenderSection(""Scripts"", false)}";
 
                 var parentKey = service.GetKey("ParentLayout");
                 var childKey = service.GetKey("ChildLayout");
@@ -207,7 +208,8 @@
                 }
 
                 // Page with section redefenition (page has own additional scripts)
-                string pageWithOwnScriptsTemplate = @"@{ Layout = ""ChildLayout""; }@section Scripts {<script scr=""/Scripts/page.js""></script>}";
+                string pageWithOwnScriptsTemplate = @"@{ Layout = ""ChildLayout""; }
+@section Scripts {<script scr=""/Scripts/page.js""></script>}";
                 string expectedPageWithOwnScriptsResult =
                     @"<script scr=""/Scripts/jquery.js""></script><script scr=""/Scripts/childlayout.js""></script><script scr=""/Scripts/page.js""></script>";
 

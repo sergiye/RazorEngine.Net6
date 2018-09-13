@@ -57,7 +57,9 @@
             using (var writer = new StringWriter())
             {
                 const string parent = @"<div>@RenderSection(""TestSection"")</div>@RenderBody()";
-                const string template = @"@{Layout = ""Parent"";}@section TestSection {<span>Hello</span>}<h1>Hello World</h1>";
+                const string template = @"@{Layout = ""Parent"";}
+@section TestSection {<span>Hello</span>}
+<h1>Hello World</h1>";
                 const string expected = "<div><span>Hello</span></div><h1>Hello World</h1>";
 
                 /* GetTemplate is the simplest method for compiling and caching a template without using a 
@@ -124,8 +126,12 @@
             using (var service = RazorEngineService.Create())
             {
                 const string GrandParent = @"<div>Message from Child Template (section): @RenderSection(""ChildMessage"")</div><div>Message from Parent Template (section): @RenderSection(""ParentMessage"")</div><div>Content from Parent Template (body): @RenderBody()</div>";
-                const string Parent = @"@{Layout = ""GrandParent"";}@section ParentMessage {<span>Hello from Parent</span>}<p>Child content: @RenderBody()</p>";
-                const string template = @"@{Layout = ""Parent"";}@section ChildMessage {<span>Hello from Child</span>}<p>This is child content</p>";
+                const string Parent = @"@{Layout = ""GrandParent"";}
+@section ParentMessage {<span>Hello from Parent</span>}
+<p>Child content: @RenderBody()</p>";
+                const string template = @"@{Layout = ""Parent"";}
+@section ChildMessage {<span>Hello from Child</span>}
+<p>This is child content</p>";
                 const string expected = "<div>Message from Child Template (section): <span>Hello from Child</span></div><div>Message from Parent Template (section): <span>Hello from Parent</span></div><div>Content from Parent Template (body): <p>Child content: <p>This is child content</p></p></div>";
 
                 var keyGrandparent = service.GetKey(nameof(GrandParent));
@@ -212,34 +218,36 @@
             }
         }
 
-        /// <summary>
-        /// Tests that a template service can pass inline templates into an included template
-        /// and outputs this in the correct order
-        /// </summary>
-        [Test]
-        public void TemplateBase_CanRenderInclude_WithInlineTemplate()
-        {
-            using (var service = RazorEngineService.Create())
-            using (var writer = new StringWriter())
-            {
-                const string child = "@model RazorEngine.Tests.TestTypes.InlineTemplateModel\n@Model.InlineTemplate(Model)";
-                const string template = "@model RazorEngine.Tests.TestTypes.InlineTemplateModel\n@{ Model.InlineTemplate = @<h1>@ViewBag.Name</h1>; }@Include(\"Child\", Model)";
-                const string expected = "<h1>Matt</h1>";
+        // Not support 
+        // https://github.com/aspnet/Razor/issues/788
+        ///// <summary>
+        ///// Tests that a template service can pass inline templates into an included template
+        ///// and outputs this in the correct order
+        ///// </summary>
+        //[Test]
+        //public void TemplateBase_CanRenderInclude_WithInlineTemplate()
+        //{
+        //    using (var service = RazorEngineService.Create())
+        //    using (var writer = new StringWriter())
+        //    {
+        //        const string child = "@model RazorEngine.Tests.TestTypes.InlineTemplateModel\n@Model.InlineTemplate(Model)";
+        //        const string template = "@model RazorEngine.Tests.TestTypes.InlineTemplateModel\n@{ Model.InlineTemplate = @<h1>@ViewBag.Name</h1>; }@Include(\"Child\", Model)";
+        //        const string expected = "<h1>Matt</h1>";
 
-                dynamic bag = new DynamicViewBag();
-                bag.Name = "Matt";
+        //        dynamic bag = new DynamicViewBag();
+        //        bag.Name = "Matt";
 
-                var childKey = service.GetKey("Child");
-                var templateKey = service.GetKey(nameof(template));
-                service.AddTemplate(childKey, child);
-                service.AddTemplate(templateKey, template);
+        //        var childKey = service.GetKey("Child");
+        //        var templateKey = service.GetKey(nameof(template));
+        //        service.AddTemplate(childKey, child);
+        //        service.AddTemplate(templateKey, template);
 
-                service.RunCompile(templateKey, writer, model: new InlineTemplateModel(), viewBag: bag);
-                string result = writer.ToString();
+        //        service.RunCompile(templateKey, writer, model: new InlineTemplateModel(), viewBag: bag);
+        //        string result = writer.ToString();
 
-                Assert.That(result == expected, "Result does not match expected: " + result);
-            }
-        }
+        //        Assert.That(result == expected, "Result does not match expected: " + result);
+        //    }
+        //}
         #endregion
     }
 }

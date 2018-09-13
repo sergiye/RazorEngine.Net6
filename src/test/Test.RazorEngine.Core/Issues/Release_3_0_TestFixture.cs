@@ -27,7 +27,8 @@
             using (var service = RazorEngineService.Create())
             {
                 const string layoutTemplate = "<h1>@Model.PageTitle</h1> @RenderSection(\"Child\")";
-                const string childTemplate = "@{ Layout = \"Parent\"; }@section Child {<h2>@Model.PageDescription</h2>}";
+                const string childTemplate = @"@{ Layout = ""Parent""; }
+@section Child {<h2>@Model.PageDescription</h2>}";
                 const string expected = "<h1>Test Page</h1> <h2>Test Page Description</h2>";
 
                 var model = new {
@@ -60,7 +61,8 @@
             using (var writer = new StringWriter())
             {
                 const string layoutTemplate = "<h1>@ViewBag.Title</h1>@RenderSection(\"Child\")";
-                const string childTemplate = "@{ Layout =  \"Parent\"; ViewBag.Title = \"Test\"; }@section Child {}";
+                const string childTemplate = @"@{ Layout = ""Parent""; ViewBag.Title = ""Test""; }
+@section Child {}";
 
                 var key = service.GetKey("Parent");
                 var childKey = service.GetKey(nameof(childTemplate));

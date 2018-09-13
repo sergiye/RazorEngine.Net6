@@ -11,6 +11,8 @@
     using Templating;
     using RazorEngine.Compilation.ReferenceResolver;
     using System.Security;
+    using Microsoft.AspNetCore.Mvc.Razor.Extensions;
+    using Microsoft.AspNetCore.Razor.Language.Extensions;
 
     /// <summary>
     /// Provides a base implementation of a compiler service.
@@ -138,7 +140,7 @@
         /// <param name="modelType">The model type.</param>
         /// <param name="className">The class name.</param>
         /// <returns>An instance of <see cref="RazorEngineHost"/>.</returns>
-        
+
         /// <summary>
         /// Gets the source code from Razor for the given template.
         /// </summary>
@@ -220,7 +222,13 @@
         [SecurityCritical]
         private string GetGeneratorResult(IEnumerable<string> namespaces, TypeContext context)
         {
-            var razorEngine = RazorEngine.Create(builder =>
+            string importString = @"
+@using System
+@using System.Threading.Tasks
+";
+            importString += string.Join("\r\n", namespaces.Select(n => "@using " + n.Trim())) + "\r\n";
+
+            RazorProjectEngine projectEngine = RazorProjectEngine.Create(RazorConfiguration.Default, new EmptyProjectFileSystem(), builder =>
             {
                 builder
                     .SetNamespace(DynamicTemplateNamespace)
@@ -229,20 +237,33 @@
                     .ConfigureClass((document, @class) =>
                     {
                         @class.ClassName = context.ClassName;
-                        //if (!str  ing.IsNullOrWhiteSpace(document.Source.FilePath))
+                        //if (!string.IsNullOrWhiteSpace(document.Source.FilePath))
                         //{
                         //    @class.ClassName = Path.GetFileNameWithoutExtension(document.Source.FilePath);
                         //}
                         @class.Modifiers.Clear();
                         @class.Modifiers.Add("internal");
                     });
+
+                InjectDirective.Register(builder);
+                ModelDirective.Register(builder);
+                //NamespaceDirective.Register(builder);
+                //PageDirective.Register(builder);
+
+                FunctionsDirective.Register(builder);
+                InheritsDirective.Register(builder);
+                SectionDirective.Register(builder);
+
+                //builder.Features.Add(new ModelExpressionPass());
+                //builder.Features.Add(new Microsoft.CodeAnalysis.Razor.DefaultTagHelperDescriptorProvider());
+                //builder.Features.Add(new InstrumentationPass());
+
+                //https://github.com/aspnet/Razor/blob/d2d84d00f52e2b6785c5644cb457984a42675013/src/RazorPageGenerator/Program.cs#L68
                 builder.Features.Add(new SuppressChecksumOptionsFeature());
+                builder.Features.Add(new SuppressMetadataAttributesFeature());
+
+                builder.AddDefaultImports(importString);
             });
-            string importString = @"
-@using System
-@using System.Threading.Tasks
-";
-            importString += String.Join("\r\n", namespaces.Select(n => "@using " + n.Trim())) + "\r\n";
 
             using (var reader = context.TemplateContent.GetTemplateReader())
             {
@@ -255,51 +276,76 @@
                 {
                     path = Path.GetDirectoryName(context.TemplateContent.TemplateFile);
                 }
-                var razorProject = RazorProject.Create(path);
-                var templateEngine = new RazorTemplateEngine(razorEngine, razorProject);
+                var razorProject = RazorProjectFileSystem.Create(path);
+                var templateEngine = new RazorTemplateEngine(projectEngine.Engine, razorProject);
                 templateEngine.Options.DefaultImports = RazorSourceDocument.Create(importString, fileName: null);
                 RazorPageGeneratorResult result;
+                //RazorPageGeneratorResult result1;
                 if (string.IsNullOrWhiteSpace(context.TemplateContent.TemplateFile))
                 {
-                    var item = RazorSourceDocument.Create(context.TemplateContent.Template, null);
-                    var imports = new List<RazorSourceDocument>();
-                    imports.Add(templateEngine.Options.DefaultImports);
-                    var doc = RazorCodeDocument.Create(item, imports);
-                    result = GenerateCodeFile(templateEngine, doc);
+                    //var item = RazorSourceDocument.Create(context.TemplateContent.Template, "temp");
+                    //var imports = new List<RazorSourceDocument>();
+                    //imports.Add(templateEngine.Options.DefaultImports);
+                    //var doc1 = RazorCodeDocument.Create(item, imports);
+                    var doc = projectEngine.Process(new InMemoryRazorProjectItemWrapper(context.TemplateContent.Template));
+                    result = GenerateCodeFile(doc);
+                    //result1 = GenerateCodeFile(templateEngine, doc1);
                 }
                 else
                 {
                     var item = razorProject.GetItem(context.TemplateContent.TemplateFile);
-                    result = GenerateCodeFile(templateEngine, item);
+                    var doc = projectEngine.Process(new FileSystemRazorProjectItemWrapper(item));
+                    result = GenerateCodeFile(doc);
+                    //result1 = GenerateCodeFile(templateEngine, item);
                 }
                 return InspectSource(result, context);
             }
         }
 
+        //private static RazorPageGeneratorResult GenerateCodeFile(RazorTemplateEngine templateEngine, RazorProjectItem projectItem)
+        //{
+        //    var projectItemWrapper = new FileSystemRazorProjectItemWrapper(projectItem);
+        //    var cSharpDocument = templateEngine.GenerateCode(projectItemWrapper);
+        //    if (cSharpDocument.Diagnostics.Any())
+        //    {
+        //        var diagnostics = string.Join(Environment.NewLine, cSharpDocument.Diagnostics);
+        //        Console.WriteLine($"One or more parse errors encountered. This will not prevent the generator from continuing: {Environment.NewLine}{diagnostics}.");
+        //    }
 
-        private static RazorPageGeneratorResult GenerateCodeFile(RazorTemplateEngine templateEngine, RazorProjectItem projectItem)
+        //    var generatedCodeFilePath = Path.ChangeExtension(projectItem.PhysicalPath, ".Designer.cs");
+        //    return new RazorPageGeneratorResult
+        //    {
+        //        FilePath = generatedCodeFilePath,
+        //        GeneratedCode = cSharpDocument.GeneratedCode,
+        //    };
+        //}
+        //private static RazorPageGeneratorResult GenerateCodeFile(RazorTemplateEngine templateEngine, RazorCodeDocument document)
+        //{
+        //    var cSharpDocument = templateEngine.GenerateCode(document);
+        //    if (cSharpDocument.Diagnostics.Any())
+        //    {
+        //        var diagnostics = string.Join(Environment.NewLine, cSharpDocument.Diagnostics);
+        //        Console.WriteLine($"One or more parse errors encountered. This will not prevent the generator from continuing: {Environment.NewLine}{diagnostics}.");
+        //    }
+
+        //    return new RazorPageGeneratorResult
+        //    {
+        //        FilePath = null,
+        //        GeneratedCode = cSharpDocument.GeneratedCode,
+        //    };
+        //}
+        private static RazorPageGeneratorResult GenerateCodeFile(RazorCodeDocument document)
         {
-            var projectItemWrapper = new FileSystemRazorProjectItemWrapper(projectItem);
-            var cSharpDocument = templateEngine.GenerateCode(projectItemWrapper);
+            var cSharpDocument = document.GetCSharpDocument();
             if (cSharpDocument.Diagnostics.Any())
             {
                 var diagnostics = string.Join(Environment.NewLine, cSharpDocument.Diagnostics);
-                Console.WriteLine($"One or more parse errors encountered. This will not prevent the generator from continuing: {Environment.NewLine}{diagnostics}.");
-            }
-
-            var generatedCodeFilePath = Path.ChangeExtension(projectItem.PhysicalPath, ".Designer.cs");
-            return new RazorPageGeneratorResult
-            {
-                FilePath = generatedCodeFilePath,
-                GeneratedCode = cSharpDocument.GeneratedCode,
-            };
-        }
-        private static RazorPageGeneratorResult GenerateCodeFile(RazorTemplateEngine templateEngine, RazorCodeDocument document)
-        {
-            var cSharpDocument = templateEngine.GenerateCode(document);
-            if (cSharpDocument.Diagnostics.Any())
-            {
-                var diagnostics = string.Join(Environment.NewLine, cSharpDocument.Diagnostics);
+                if (cSharpDocument.Diagnostics.Where(d => d.Severity == RazorDiagnosticSeverity.Error).Any())
+                {
+                    var err = cSharpDocument.Diagnostics.First(d => d.Severity == RazorDiagnosticSeverity.Error);
+                    throw new TemplateParsingException($"One or more parse errors encountered: {Environment.NewLine}{diagnostics}.",
+                        err.Span.CharacterIndex, err.Span.LineIndex);
+                }
                 Console.WriteLine($"One or more parse errors encountered. This will not prevent the generator from continuing: {Environment.NewLine}{diagnostics}.");
             }
 
@@ -365,7 +411,7 @@
             context.AddReferences(references);
             return references;
         }
-        
+
         /// <summary>
         /// Disposes the current instance.
         /// </summary>
@@ -407,6 +453,52 @@
             }
         }
 
+        private class SuppressMetadataAttributesFeature : RazorEngineFeatureBase, IConfigureRazorCodeGenerationOptionsFeature
+        {
+            public int Order { get; set; }
+
+            public void Configure(RazorCodeGenerationOptionsBuilder options)
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                options.SuppressMetadataAttributes = true;
+            }
+        }
+
+        private class InMemoryRazorProjectItemWrapper : RazorProjectItem
+        {
+            private readonly string _template;
+            public InMemoryRazorProjectItemWrapper(string template)
+            {
+                _template = template;
+            }
+
+            public override string BasePath { get; }
+
+            /// <inheritdoc />
+            public override string FilePath => "temp";
+
+            /// <inheritdoc />
+            public override bool Exists => true;
+
+            /// <inheritdoc />
+            public override string PhysicalPath => "";
+
+            public override Stream Read()
+            {
+                var processedContent = ProcessFileIncludes();
+                return new MemoryStream(System.Text.Encoding.UTF8.GetBytes(processedContent));
+            }
+
+            private string ProcessFileIncludes()
+            {
+                return _template;
+            }
+        }
+
         private class FileSystemRazorProjectItemWrapper : RazorProjectItem
         {
             private readonly RazorProjectItem _source;
@@ -421,7 +513,7 @@
             public override string FilePath => _source.FilePath;
 
             // Mask the full name since we don't want a developer's local file paths to be commited.
-            public override string PhysicalPath => _source.FileName;
+            public override string PhysicalPath => _source.PhysicalPath;
 
             public override bool Exists => _source.Exists;
 
@@ -433,7 +525,7 @@
 
             private string ProcessFileIncludes()
             {
-                var basePath = System.IO.Path.GetDirectoryName(_source.PhysicalPath);
+                var basePath = Path.GetDirectoryName(_source.PhysicalPath);
                 var cshtmlContent = File.ReadAllText(_source.PhysicalPath);
 
                 var startMatch = "<%$ include: ";
@@ -459,6 +551,53 @@
                 }
                 return cshtmlContent;
             }
+        }
+
+        internal class EmptyProjectFileSystem : RazorProjectFileSystem
+        {
+            public override IEnumerable<RazorProjectItem> EnumerateItems(string basePath)
+            {
+                NormalizeAndEnsureValidPath(basePath);
+                return Enumerable.Empty<RazorProjectItem>();
+            }
+
+            public override RazorProjectItem GetItem(string path)
+            {
+                NormalizeAndEnsureValidPath(path);
+                return new NotFoundProjectItem(string.Empty, path);
+            }
+        }
+
+        /// <summary>
+        /// A <see cref="RazorProjectItem"/> that does not exist.
+        /// </summary>
+        internal class NotFoundProjectItem : RazorProjectItem
+        {
+            /// <summary>
+            /// Initializes a new instance of <see cref="NotFoundProjectItem"/>.
+            /// </summary>
+            /// <param name="basePath">The base path.</param>
+            /// <param name="path">The path.</param>
+            public NotFoundProjectItem(string basePath, string path)
+            {
+                BasePath = basePath;
+                FilePath = path;
+            }
+
+            /// <inheritdoc />
+            public override string BasePath { get; }
+
+            /// <inheritdoc />
+            public override string FilePath { get; }
+
+            /// <inheritdoc />
+            public override bool Exists => false;
+
+            /// <inheritdoc />
+            public override string PhysicalPath => throw new NotSupportedException();
+
+            /// <inheritdoc />
+            public override Stream Read() => throw new NotSupportedException();
         }
     }
 }

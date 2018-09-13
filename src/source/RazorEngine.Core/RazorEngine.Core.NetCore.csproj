@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
+    <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE;RAZOR4</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Do not generate AssemblyInfo because we are doing that with the
@@ -10,7 +10,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>RazorEngine.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
     <RootNamespace>RazorEngine</RootNamespace>
     <PackageId>RazorEngine.Core.NetCore</PackageId>
     <AssemblyName>RazorEngine.Core.NetCore</AssemblyName>
@@ -24,18 +23,28 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/hermanho/RazorEngine/tree/updateToNetCore</RepositoryUrl>
     <PackageProjectUrl>https://github.com/hermanho/RazorEngine/tree/updateToNetCore</PackageProjectUrl>
-    <Version>4.5.1-rc1</Version>
+    <Version>4.6.0-rc1</Version>
     <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2017</Copyright>
     <Company>RazorEngine</Company>
     <Product>RazorEngine</Product>
     <IncludeSymbols>True</IncludeSymbols>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.Extensions" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.1.2" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
