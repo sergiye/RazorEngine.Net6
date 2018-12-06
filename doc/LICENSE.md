@@ -1,1 +1,0 @@
-See https://github.com/Antaris/RazorEngine/blob/master/LICENSE.md
