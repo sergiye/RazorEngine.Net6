@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorEngine.Core.NetCore", "RazorEngine.Core.NetCore\RazorEngine.Core.NetCore.csproj", "{811157A5-C29E-418C-AE17-E9490F4128C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{811157A5-C29E-418C-AE17-E9490F4128C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{811157A5-C29E-418C-AE17-E9490F4128C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{811157A5-C29E-418C-AE17-E9490F4128C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{811157A5-C29E-418C-AE17-E9490F4128C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB9825E3-5578-417A-B399-B6133EA577ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB9825E3-5578-417A-B399-B6133EA577ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB9825E3-5578-417A-B399-B6133EA577ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB9825E3-5578-417A-B399-B6133EA577ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A0EEF1E-24FE-4314-9B6B-873204BD4C9B}
+	EndGlobalSection
+EndGlobal
