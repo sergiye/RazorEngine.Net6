@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorEngine.Core.NetCore", "RazorEngine.Core.NetCore\RazorEngine.Core.NetCore.csproj", "{811157A5-C29E-418C-AE17-E9490F4128C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorEngine.NetCore", "RazorEngine.NetCore\RazorEngine.NetCore.csproj", "{811157A5-C29E-418C-AE17-E9490F4128C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
