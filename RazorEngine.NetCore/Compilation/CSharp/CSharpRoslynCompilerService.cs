@@ -39,7 +39,8 @@ namespace RazorEngine.Roslyn.CSharp
         /// <param name="markupParserFactory"></param>
         [SecurityCritical]
         public CSharpRoslynCompilerService(bool strictMode = true)
-            : base() {
+            : base()
+        {
 #if !RAZOR4
             _codeDomProvider = new Microsoft.CSharp.CSharpCodeProvider(); 
 #endif
@@ -121,7 +122,7 @@ namespace RazorEngine.Roslyn.CSharp
         [SecurityCritical]
         public override CompilationOptions CreateOptions(TypeContext context)
         {
-            return 
+            return
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                 .WithUsings(context.Namespaces);
         }

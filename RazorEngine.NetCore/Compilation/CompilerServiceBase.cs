@@ -268,6 +268,7 @@
         [SecurityCritical]
         private string GetGeneratorResult(IEnumerable<string> namespaces, TypeContext context)
         {
+#pragma warning disable 612, 618
             var razorEngine = RazorEngine.Create(builder =>
             {
                 builder
@@ -286,6 +287,7 @@
                     });
                 builder.Features.Add(new SuppressChecksumOptionsFeature());
             });
+
             string importString = @"
 @using System
 @using System.Threading.Tasks
@@ -303,7 +305,7 @@
                 {
                     path = Path.GetDirectoryName(context.TemplateContent.TemplateFile);
                 }
-                var razorProject = RazorProject.Create(path);
+                var razorProject = RazorProjectFileSystem.Create(path);
                 var templateEngine = new RazorTemplateEngine(razorEngine, razorProject);
                 templateEngine.Options.DefaultImports = RazorSourceDocument.Create(importString, fileName: null);
                 RazorPageGeneratorResult result;
