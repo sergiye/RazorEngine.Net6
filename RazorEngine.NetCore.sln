@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorEngine.NetCore", "RazorEngine.NetCore\RazorEngine.NetCore.csproj", "{811157A5-C29E-418C-AE17-E9490F4128C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console-Test", "Console-Test\Console-Test.csproj", "{7A9A2BAF-1500-4DE8-90D7-D87FE6383D87}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{811157A5-C29E-418C-AE17-E9490F4128C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{811157A5-C29E-418C-AE17-E9490F4128C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{811157A5-C29E-418C-AE17-E9490F4128C8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A9A2BAF-1500-4DE8-90D7-D87FE6383D87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A9A2BAF-1500-4DE8-90D7-D87FE6383D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A9A2BAF-1500-4DE8-90D7-D87FE6383D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A9A2BAF-1500-4DE8-90D7-D87FE6383D87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
