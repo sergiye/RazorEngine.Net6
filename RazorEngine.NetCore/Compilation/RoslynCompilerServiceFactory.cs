@@ -32,11 +32,11 @@ namespace RazorEngine.Roslyn
                     return new CSharpRoslynCompilerService();
 
                 case Language.VisualBasic:
-//#if RAZOR4
+                    //#if RAZOR4
                     throw new NotSupportedException("Razor4 doesn't support VB.net apparently.");
-//#else
-//                    return new VBRoslynCompilerService();
-//#endif
+                //#else
+                //                    return new VBRoslynCompilerService();
+                //#endif
 
                 default:
                     throw new ArgumentException("Unsupported language: " + language);

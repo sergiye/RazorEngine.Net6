@@ -37,8 +37,6 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
     public static class BuildProxy
     {
         private static ModuleBuilder _builder;
-        internal static ModuleBuilder _tempBuilder;
-        internal static AssemblyBuilder _tempSaveAssembly;
 
         private static AssemblyBuilder _ab;
         private static readonly IDictionary<TypeHash, Type> _typeHash = new Dictionary<TypeHash, Type>();
@@ -109,14 +107,14 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
 
 #endif
 
-                /// <summary>
-                /// Builds the type for the static proxy or returns from cache
-                /// </summary>
-                /// <param name="contextType">Type of the context.</param>
-                /// <param name="mainInterface">The main interface.</param>
-                /// <param name="otherInterfaces">The other interfaces.</param>
-                /// <returns></returns>
-                public static Type BuildType(Type contextType, Type mainInterface, params Type[] otherInterfaces)
+        /// <summary>
+        /// Builds the type for the static proxy or returns from cache
+        /// </summary>
+        /// <param name="contextType">Type of the context.</param>
+        /// <param name="mainInterface">The main interface.</param>
+        /// <param name="otherInterfaces">The other interfaces.</param>
+        /// <returns></returns>
+        public static Type BuildType(Type contextType, Type mainInterface, params Type[] otherInterfaces)
         {
             lock (TypeCacheLock)
             {
@@ -1690,7 +1688,7 @@ namespace RazorEngine.Compilation.ImpromptuInterface.Build
 
                     GenerateAssembly(tPlainName, access, ref _ab, ref _builder);
                 }
-                return _tempBuilder ?? _builder;
+                return _builder;
             }
         }
 
