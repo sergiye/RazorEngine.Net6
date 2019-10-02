@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Razor.Language;
 using RazorEngine.Compilation;
 using RazorEngine.Compilation.Inspectors;
 using RazorEngine.Compilation.ReferenceResolver;
@@ -299,5 +300,13 @@ namespace RazorEngine.Configuration
                 return _templateManager;
             }
         }
+
+        /// <summary>
+        /// Callback to register custom Model directives or configure the razor engine builder in another form.
+        /// </summary>
+        /// <value>
+        /// An callback that receives the builder
+        /// </value>
+        public Action<IRazorEngineBuilder> ConfigureCompilerBuilder { get; }
     }
 }

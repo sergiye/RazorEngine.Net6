@@ -1,5 +1,6 @@
 ﻿namespace RazorEngine.Compilation
 {
+    using Microsoft.AspNetCore.Razor.Language;
     using RazorEngine.Templating;
     using ReferenceResolver;
     using System;
@@ -72,6 +73,9 @@
         {
             _addReferences(references);
         }
+
+        public Action<IRazorEngineBuilder> ConfigureCompilerBuilder { get; set; }
+
         #endregion
     }
 }
