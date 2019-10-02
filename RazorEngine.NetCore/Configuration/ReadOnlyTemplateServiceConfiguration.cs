@@ -132,6 +132,7 @@ namespace RazorEngine.Configuration
             }
 #pragma warning restore 0618 // Backwards Compat.
 #endif
+            ConfigureCompilerBuilder = config.ConfigureCompilerBuilder;
         }
 
         /// <summary>
