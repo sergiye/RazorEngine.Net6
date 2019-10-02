@@ -9,6 +9,7 @@
     using Templating;
     using Text;
     using RazorEngine.Compilation.ReferenceResolver;
+    using Microsoft.AspNetCore.Razor.Language;
 
     /// <summary>
     /// Defines a fluent template service configuration
@@ -155,6 +156,19 @@
         public ITemplateManager TemplateManager
         {
             get { return _innerConfig.TemplateManager; }
+        }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+                              /// <summary>
+                              /// Callback to register custom Model directives or configure the razor engine builder in another form.
+                              /// </summary>
+                              /// <value>
+                              /// An callback that receives the builder
+                              /// </value>
+        public Action<IRazorEngineBuilder> ConfigureCompilerBuilder
+#pragma warning restore CS0618 // Type or member is obsolete
+        {
+            get { return _innerConfig.ConfigureCompilerBuilder; }
         }
         #endregion
     }

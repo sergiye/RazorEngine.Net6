@@ -97,6 +97,7 @@
         /// </summary>
         ITemplateManager TemplateManager { get; }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Callback to register custom Model directives or configure the razor engine builder in another form.
         /// </summary>
@@ -104,6 +105,8 @@
         /// An callback that receives the builder
         /// </value>
         Action<IRazorEngineBuilder> ConfigureCompilerBuilder { get; }
+#pragma warning restore CS0618 // Type or member is obsolete
         #endregion
+
     }
 }

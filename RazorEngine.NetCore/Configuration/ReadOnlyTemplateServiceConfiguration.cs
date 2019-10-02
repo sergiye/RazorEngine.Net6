@@ -301,6 +301,7 @@ namespace RazorEngine.Configuration
             }
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Callback to register custom Model directives or configure the razor engine builder in another form.
         /// </summary>
@@ -308,5 +309,6 @@ namespace RazorEngine.Configuration
         /// An callback that receives the builder
         /// </value>
         public Action<IRazorEngineBuilder> ConfigureCompilerBuilder { get; }
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 }
