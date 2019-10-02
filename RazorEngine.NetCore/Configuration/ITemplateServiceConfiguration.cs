@@ -8,6 +8,7 @@
     using Templating;
     using Text;
     using RazorEngine.Compilation.ReferenceResolver;
+    using Microsoft.AspNetCore.Razor.Language;
 
     /// <summary>
     /// Defines the required contract for implementing template service configuration.
@@ -95,7 +96,14 @@
         /// Gets the template resolver.
         /// </summary>
         ITemplateManager TemplateManager { get; }
-#endregion
 
+        /// <summary>
+        /// Callback to register custom Model directives or configure the razor engine builder in another form.
+        /// </summary>
+        /// <value>
+        /// An callback that receives the builder
+        /// </value>
+        Action<IRazorEngineBuilder> ConfigureCompilerBuilder { get; }
+        #endregion
     }
 }
