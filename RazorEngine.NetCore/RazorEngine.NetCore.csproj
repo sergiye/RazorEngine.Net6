@@ -13,19 +13,20 @@
     <AssemblyOriginatorKeyFile>RazorEngine.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <RootNamespace>RazorEngine</RootNamespace>
-    <PackageId>RazorEngine.NetCore</PackageId>
+    <PackageId>RazorEngine.NetCore.Pretzel</PackageId>
     <AssemblyName>RazorEngine.NetCore</AssemblyName>
-    <PackageTags>RazorEngine;aspnetcore;NetCore</PackageTags>
-    <Authors>Connie Yau, HermanHo, Fouad Messaia</Authors>
-    <Description>Fork from https://github.com/hermanho/RazorEngine</Description>
+    <PackageTags>RazorEngine;aspnetcore;NetCore;Pretzel</PackageTags>
+    <Authors>Connie Yau, HermanHo, Fouad Messaia, Manuel Grundner</Authors>
+    <Description>Fork from https://github.com/fouadmess/RazorEngine</Description>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/fouadmess/RazorEngine</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/fouadmess/RazorEngine</PackageProjectUrl>
-    <Version>2.2.4</Version>
-    <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2018</Copyright>
+    <RepositoryUrl>https://github.com/biohazard999/RazorEngine</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/biohazard999/RazorEngine</PackageProjectUrl>
+    <Version>2.2.6</Version>
+    <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2019</Copyright>
     <Company>RazorEngine</Company>
     <Product>RazorEngine</Product>
     <IncludeSymbols>True</IncludeSymbols>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
