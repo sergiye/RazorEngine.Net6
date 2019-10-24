@@ -2,6 +2,7 @@
 using RazorEngine.Compilation.ReferenceResolver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -239,7 +240,10 @@ namespace RazorEngine.Roslyn.CSharp
                     opts = opts.WithDebugInformationFormat(DebugInformationFormat.PortablePdb);
                 }
 
-                var result = compilation.Emit(assemblyStream, pdbStreamHelper, options: opts);
+                var result = Debugger.IsAttached
+                    ? compilation.Emit(assemblyStream, pdbStreamHelper, options: opts)
+                    : compilation.Emit(assemblyStream);
+
                 if (!result.Success)
                 {
                     var errors =
