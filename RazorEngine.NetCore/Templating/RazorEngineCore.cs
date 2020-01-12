@@ -108,7 +108,8 @@
             {
                 ModelType = modelType ?? typeof(System.Dynamic.DynamicObject),
                 TemplateContent = razorTemplate,
-                TemplateType = (_config.BaseTemplateType) ?? typeof(TemplateBase<>)
+                TemplateType = (_config.BaseTemplateType) ?? typeof(TemplateBase<>),
+                ConfigureCompilerBuilder = _config.ConfigureCompilerBuilder
             };
 
             foreach (string ns in _config.Namespaces)

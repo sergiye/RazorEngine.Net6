@@ -286,6 +286,7 @@
                         @class.Modifiers.Add("internal");
                     });
                 builder.Features.Add(new SuppressChecksumOptionsFeature());
+                context.ConfigureCompilerBuilder?.Invoke(builder);
             });
 
             string importString = @"

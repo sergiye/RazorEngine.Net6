@@ -9,6 +9,7 @@
     using Text;
     using RazorEngine.Compilation.ReferenceResolver;
     using System.Security;
+    using Microsoft.AspNetCore.Razor.Language;
 #if !NO_CONFIGURATION
     using RazorEngine.Configuration.Xml;
 #endif
@@ -167,6 +168,16 @@
         /// Gets or sets the template resolver.
         /// </summary>
         public ITemplateManager TemplateManager { get; set; }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        /// <summary>
+        /// Callback to register custom Model directives or configure the razor engine builder in another form.
+        /// </summary>
+        /// <value>
+        /// An callback that receives the builder
+        /// </value>
+        public Action<IRazorEngineBuilder> ConfigureCompilerBuilder { get; set; }
+#pragma warning restore CS0618 // Type or member is obsolete
         #endregion
     }
 }
