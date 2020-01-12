@@ -1,4 +1,4 @@
-# RazorEngine
+# RazorEngine.NetCore
 
 [![Join the chat at https://gitter.im/Antaris/RazorEngine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Antaris/RazorEngine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -26,9 +26,9 @@ Release Branch (`releases`)
 
 ## Quickstart
 
-First install the nuget package (>=3.5.0).
+First install the nuget package
 
-	Install-Package RazorEngine
+	Install-Package RazorEngine.NetCore
 
 A templating engine built on Microsoft's Razor parsing engine, RazorEngine allows you to use Razor syntax to build dynamic templates.
 You can find an introduction [here](http://www.asp.net/web-pages/overview/getting-started/introducing-razor-syntax-%28c%29).
@@ -39,8 +39,7 @@ using RazorEngine;
 using RazorEngine.Templating; // For extension methods.
 
 string template = "Hello @Model.Name, welcome to RazorEngine!";
-var result =
-	Engine.Razor.RunCompile(template, "templateKey", null, new { Name = "World" });
+var result = Engine.Razor.RunCompile(template, "templateKey", null, new { Name = "World" });
 ```
 
 > The `RunCompile` method used here is an extension method and you need to open the `RazorEngine.Templating` namespace.
@@ -49,8 +48,7 @@ The `"templateKey"` must be unique and after running the above example you can r
 
 ```csharp
 // using RazorEngine.Templating; // Dont forget to include this.
-var result =
-	Engine.Razor.Run("templateKey", null, new { Name = "Max" });
+var result = Engine.Razor.Run("templateKey", null, new { Name = "Max" });
 ```
 
 The null parameter is the `modelType` and `null` in this case means we use `dynamic` as the type of the model.
@@ -86,7 +84,32 @@ If you want to use the static `Engine` class with this new configuration:
 ```csharp
 Engine.Razor = service;
 ```
+### Custom helpers
 
+Declare new namespace
+```csharp
+namespace Helpers
+{
+    public static class TextHelper
+    {
+        public static string Decorate(string value)
+        {
+            return "-= " + value + " =-";
+        }
+    }
+}
+```
+
+Add created namespace to configuration
+```csharp
+ITemplateServiceConfiguration configuration = new TemplateServiceConfiguration();
+configuration.Namespaces.Add("Helpers");
+
+IRazorEngineService service = RazorEngineService.Create(configuration);
+
+string template = @"Hello @Model.Name, @TextHelper.Decorate(Model.Name)";
+string result = service.RunCompile(template, "templateKey", null, new { Name = "World" });
+```
 
 ### General Configuration
 
