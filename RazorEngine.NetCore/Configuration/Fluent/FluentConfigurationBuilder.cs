@@ -5,6 +5,7 @@
 
     using Compilation;
     using Compilation.Inspectors;
+    using Microsoft.AspNetCore.Razor.Language;
     using Templating;
     using Text;
 
@@ -330,6 +331,19 @@
                     throw new ArgumentException("Unsupported encoding: " + encoding);
             }
 
+            return this;
+        }
+
+#pragma warning disable CS0618 // Type or member is obsolete        
+        /// <summary>
+        /// Callback to register custom Model directives or configure the razor engine builder in another form.
+        /// </summary>
+        /// <param name="options">An callback that receives the builder.</param>
+        /// <returns>The current configuration builder.</returns>
+        public IConfigurationBuilder WithConfigureCompilerBuilderOptions(Action<IRazorEngineBuilder> options)
+#pragma warning restore CS0618 // Type or member is obsolete
+        {
+            _config.ConfigureCompilerBuilder = options;
             return this;
         }
         #endregion

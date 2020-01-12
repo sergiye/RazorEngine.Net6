@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Razor.Language;
 using RazorEngine.Compilation;
 using RazorEngine.Compilation.Inspectors;
 using RazorEngine.Compilation.ReferenceResolver;
@@ -131,6 +132,7 @@ namespace RazorEngine.Configuration
             }
 #pragma warning restore 0618 // Backwards Compat.
 #endif
+            ConfigureCompilerBuilder = config.ConfigureCompilerBuilder;
         }
 
         /// <summary>
@@ -299,5 +301,15 @@ namespace RazorEngine.Configuration
                 return _templateManager;
             }
         }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        /// <summary>
+        /// Callback to register custom Model directives or configure the razor engine builder in another form.
+        /// </summary>
+        /// <value>
+        /// An callback that receives the builder
+        /// </value>
+        public Action<IRazorEngineBuilder> ConfigureCompilerBuilder { get; }
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 }
