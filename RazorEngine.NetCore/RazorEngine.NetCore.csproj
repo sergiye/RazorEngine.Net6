@@ -13,9 +13,9 @@
     <AssemblyOriginatorKeyFile>RazorEngine.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <RootNamespace>RazorEngine</RootNamespace>
-    <PackageId>RazorEngine.NetCore.Pretzel</PackageId>
+    <PackageId>RazorEngine.NetCore</PackageId>
     <AssemblyName>RazorEngine.NetCore</AssemblyName>
-    <PackageTags>RazorEngine;aspnetcore;NetCore;Pretzel</PackageTags>
+    <PackageTags>RazorEngine;aspnetcore;NetCore</PackageTags>
     <Authors>Connie Yau, HermanHo, Fouad Messaia, Manuel Grundner</Authors>
     <Description>Fork from https://github.com/fouadmess/RazorEngine</Description>
     <RepositoryType>git</RepositoryType>
