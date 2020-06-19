@@ -16,12 +16,12 @@
     <PackageId>RazorEngine.NetCore</PackageId>
     <AssemblyName>RazorEngine.NetCore</AssemblyName>
     <PackageTags>RazorEngine;aspnetcore;NetCore</PackageTags>
-    <Authors>Connie Yau, HermanHo, Fouad Messaia, Manuel Grundner</Authors>
-    <Description>Fork from https://github.com/fouadmess/RazorEngine</Description>
+    <Authors>Fouad Messaia</Authors>
+    <Description>Fork from https://github.com/Antaris/RazorEngine</Description>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/biohazard999/RazorEngine</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/biohazard999/RazorEngine</PackageProjectUrl>
-    <Version>3.1.0-rc01</Version>
+    <RepositoryUrl>https://github.com/fouadmess/RazorEngine</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/fouadmess/RazorEngine</PackageProjectUrl>
+    <Version>3.1.0</Version>
     <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2020</Copyright>
     <Company>RazorEngine</Company>
     <Product>RazorEngine</Product>
