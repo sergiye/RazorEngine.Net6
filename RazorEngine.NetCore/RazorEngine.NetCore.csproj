@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.1;netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
     <DefineConstants>$(DefineConstants);RAZOR4</DefineConstants>
     <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
   </PropertyGroup>
@@ -21,8 +21,8 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/biohazard999/RazorEngine</RepositoryUrl>
     <PackageProjectUrl>https://github.com/biohazard999/RazorEngine</PackageProjectUrl>
-    <Version>2.2.6</Version>
-    <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2019</Copyright>
+    <Version>3.1.0-rc01</Version>
+    <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2020</Copyright>
     <Company>RazorEngine</Company>
     <Product>RazorEngine</Product>
     <IncludeSymbols>True</IncludeSymbols>
@@ -31,17 +31,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Razor" Version="[2.1.0, 2.2)" Condition="'$(TargetFramework)' == 'netcoreapp2.1'" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="[2.1.0, 2.2)" Condition="'$(TargetFramework)' == 'netcoreapp2.1'" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="[2.1.0, 2.2)" Condition="'$(TargetFramework)' == 'netcoreapp2.1'" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" Condition="'$(TargetFramework)' != 'netcoreapp2.1'" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" Condition="'$(TargetFramework)' != 'netcoreapp2.1'" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="2.2.0" Condition="'$(TargetFramework)' != 'netcoreapp2.1'" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="3.1.0" Condition="'$(TargetFramework)' == 'netcoreapp3.1'" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" Condition="'$(TargetFramework)' != 'netcoreapp3.1'" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" Condition="'$(TargetFramework)' != 'netcoreapp3.1'" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="2.2.0" Condition="'$(TargetFramework)' != 'netcoreapp3.1'" />
 
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.8.0" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="System.Security.Permissions" Version="4.5.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.6.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Security.Permissions" Version="4.7.0" />
   </ItemGroup>
 
   <!-- Exclude components that use System.Configuration -->
