@@ -186,19 +186,11 @@ namespace RazorEngine.Roslyn.CSharp
         /// proper execution on Mono/Unix.
         /// </summary>
         /// <returns></returns>
-        private static bool IsMono()
+        private static bool ShouldCreatePortablePdb()
         {
-            return Type.GetType("Mono.Runtime") != null;
-        }
-
-        /// <summary>
-        /// Check for if we're on Linux as Roslyn needs to generate portable PDBs for
-        /// proper execution on Mono/Unix.
-        /// </summary>
-        /// <returns></returns>
-        private static bool IsLinux()
-        {
-            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+            return Type.GetType("Mono.Runtime") != null
+                || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                || RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
         }
 
         /// <summary>
@@ -246,7 +238,7 @@ namespace RazorEngine.Roslyn.CSharp
                     .WithPdbFilePath(assemblyPdbFile);
                 var pdbStreamHelper = pdbStream;
 
-                if (IsMono() || IsLinux())
+                if (ShouldCreatePortablePdb())
                 {
                     opts = opts.WithDebugInformationFormat(DebugInformationFormat.PortablePdb);
                 }
