@@ -16,6 +16,7 @@ using System.Web.Razor;
 using Microsoft.CodeAnalysis.Text;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 using Microsoft.CodeAnalysis.Emit;
@@ -191,6 +192,16 @@ namespace RazorEngine.Roslyn.CSharp
         }
 
         /// <summary>
+        /// Check for if we're on Linux as Roslyn needs to generate portable PDBs for
+        /// proper execution on Mono/Unix.
+        /// </summary>
+        /// <returns></returns>
+        private static bool IsLinux()
+        {
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+        }
+
+        /// <summary>
         /// Configures and runs the compiler.
         /// </summary>
         /// <param name="context"></param>
@@ -235,7 +246,7 @@ namespace RazorEngine.Roslyn.CSharp
                     .WithPdbFilePath(assemblyPdbFile);
                 var pdbStreamHelper = pdbStream;
 
-                if (IsMono())
+                if (IsMono() || IsLinux())
                 {
                     opts = opts.WithDebugInformationFormat(DebugInformationFormat.PortablePdb);
                 }
