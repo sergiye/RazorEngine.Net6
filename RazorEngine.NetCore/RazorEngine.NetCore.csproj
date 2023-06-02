@@ -13,7 +13,7 @@
     <AssemblyOriginatorKeyFile>RazorEngine.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <RootNamespace>RazorEngine</RootNamespace>
-    <PackageId>RazorEngine.NetCore</PackageId>
+    <PackageId>RazorEngine.Net6</PackageId>
     <AssemblyName>RazorEngine.NetCore</AssemblyName>
     <PackageTags>RazorEngine;aspnetcore;NetCore</PackageTags>
     <Authors>Sergiy Egoshin</Authors>
