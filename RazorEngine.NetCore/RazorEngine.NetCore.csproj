@@ -21,7 +21,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/sergiye/RazorEngine.Net6</RepositoryUrl>
     <PackageProjectUrl>https://github.com/sergiye/RazorEngine.Net6</PackageProjectUrl>
-    <Version>6.0.0</Version>
+    <Version>6.7.8</Version>
     <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2023</Copyright>
     <Company>Sergiy Egoshyn</Company>
     <Product>RazorEngine</Product>
