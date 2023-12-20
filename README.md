@@ -1,34 +1,12 @@
-# RazorEngine.NetCore
-
-[![Join the chat at https://gitter.im/Antaris/RazorEngine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Antaris/RazorEngine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-This project is searching for new maintainers, so if you want to help write on gitter or start sending PRs :)
+# RazorEngine.Net6
 
 *latest* documentation available on https://antaris.github.io/RazorEngine/.
-
-## Forked version
-https://github.com/Antaris/RazorEngine/issues/414
-Fork from https://github.com/conniey/RazorEngine/tree/updateToNetCore
-Minor fixing and fork to https://github.com/hermanho/RazorEngine/tree/updateToNetCore
-
-## Build status
-
-Develop Branch (`master`)
-
-[![Build Status](https://travis-ci.org/Antaris/RazorEngine.svg?branch=master)](https://travis-ci.org/Antaris/RazorEngine)
-[![Build status](https://ci.appveyor.com/api/projects/status/39bi38wonhwolrgy/branch/master?svg=true)](https://ci.appveyor.com/project/Antaris/razorengine/branch/master)
-
-Release Branch (`releases`)
-
-[![Build Status](https://travis-ci.org/Antaris/RazorEngine.svg?branch=releases)](https://travis-ci.org/Antaris/RazorEngine)
-[![Build status](https://ci.appveyor.com/api/projects/status/39bi38wonhwolrgy/branch/releases?svg=true)](https://ci.appveyor.com/project/Antaris/razorengine/branch/releases)
-
 
 ## Quickstart
 
 First install the nuget package
 
-	Install-Package RazorEngine.NetCore
+	Install-Package RazorEngine.Net6
 
 A templating engine built on Microsoft's Razor parsing engine, RazorEngine allows you to use Razor syntax to build dynamic templates.
 You can find an introduction [here](http://www.asp.net/web-pages/overview/getting-started/introducing-razor-syntax-%28c%29).
