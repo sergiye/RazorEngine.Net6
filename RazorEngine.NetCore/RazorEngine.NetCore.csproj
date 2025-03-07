@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net6.0-windows;net7.0;net7.0-windows;net8.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net6.0;net6.0-windows;net7.0;net7.0-windows;net8.0;net9.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>
     <DefineConstants>$(DefineConstants);RAZOR4</DefineConstants>
     <DefineConstants>$(DefineConstants);NO_APPDOMAIN;NO_CODEDOM;NO_CONFIGURATION;NETCORE</DefineConstants>
   </PropertyGroup>
@@ -21,7 +21,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/sergiye/RazorEngine.Net6</RepositoryUrl>
     <PackageProjectUrl>https://github.com/sergiye/RazorEngine.Net6</PackageProjectUrl>
-    <Version>6.7.8</Version>
+    <Version>6.7.8.9</Version>
     <Copyright>RazorEngine Copyright © RazorEngine Project 2011-2023</Copyright>
     <Company>Sergiy Egoshyn</Company>
     <Product>RazorEngine</Product>
