@@ -1,3 +1,7 @@
+[![Nuget](https://img.shields.io/nuget/v/RazorEngine.Net6?style=for-the-badge)](https://www.nuget.org/packages/RazorEngine.Net6/)
+[![Nuget](https://img.shields.io/nuget/dt/RazorEngine.Net6?label=nuget-downloads&style=for-the-badge)](https://www.nuget.org/packages/RazorEngine.Net6/)
+![Last commit](https://img.shields.io/github/last-commit/sergiye/RazorEngine.Net6?style=for-the-badge&color=00AD00)
+
 # RazorEngine.Net6
 
 *latest* documentation available on https://antaris.github.io/RazorEngine/.
