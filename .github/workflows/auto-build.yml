@@ -30,6 +30,9 @@ jobs:
       - name: Build
         run: msbuild RazorEngine.NetCore.sln -p:Configuration=Release -m
 
+      - name: Pack
+        run: dotnet pack RazorEngine.NetCore.sln -c Release
+
       - name: Upload NuGet package
         uses: actions/upload-artifact@v4
         with:
